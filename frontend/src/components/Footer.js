@@ -1,7 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
-import { ReactComponent as Icon } from './github.svg'
+import { ReactComponent as Icon } from '../assets/github.svg'
 
 export const Footer = () => {
   const StyledFooter = styled.footer`
