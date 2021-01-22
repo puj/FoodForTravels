@@ -146,7 +146,8 @@ app.post('/users', async (req, res) => {
   }
 })
 
-app.post('/blogposts', async (req, res) => {
+app.post('/users/:id/blogposts', authenticateUser)
+app.post('/users/:id/blogposts', async (req, res) => {
   try {
     const { author, text, tags, image } = req.body
     const post = await new BlogPost({
@@ -155,9 +156,7 @@ app.post('/blogposts', async (req, res) => {
       tags,
       image,
     }).save()
-    console.log('PostID:', post._id)
-    console.log('Blogpost:', post)
-    res.status(200).send()
+    res.status(200).send(post)
   } catch (err) {
     res.status(400).json({
       message: 'Create was unsuccessful',
@@ -199,6 +198,26 @@ app.get('/blogposts/:id', async (req, res) => {
       message: 'No posts found with that id',
       error_message: err.message,
       error: err,
+    })
+  }
+})
+
+app.post('/login', async(req, res) => {
+  try{
+    const { username, password } = req.body
+    const user = await User.findOne({ username })
+    if(user && bcrypt.compareSync(password, user.password)) {
+      res.status(200).json({ userID: user._id, accesstoken: user.accessToken })
+    } else {
+      res.status(404).json({
+        message: 'Oops, something went wrong. Check your username and/or password!',
+      })
+    }
+  } catch(err) {
+    res.status(404).json({
+        message: 'No user found',
+        error_message: err.message,
+        error: err
     })
   }
 })
