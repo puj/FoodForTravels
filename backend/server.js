@@ -189,26 +189,26 @@ app.post('/users/:id/blogposts', async (req, res) => {
 
 app.get('/blogposts', async (req, res) => {
   try {
-    const { page = 1, limit = 10 } = req.query
+    //const { page = 1, limit = 10 } = req.query
+    //const count = BlogPost.countDocuments()
     const tags = req.query.tags
 
-    const blogposts = await BlogPost.find()
+    const blogpostQuery = BlogPost.find()
     if (tags) {
       const tagArray = tags.split(',')
-      blogposts.where('tags.text').in(tagArray)
+      blogpostQuery.where('tags.text').in(tagArray)
     }
-    blogposts
+    blogpostQuery
       .sort({ createdAt: 'desc' })
-      .limit(limit * 1)
-      .skip((page - 1) * limit)
-      .exec()
-    const count = await blogposts.countDocuments()
+      .limit(10/* limit * 1 */)
+      /* .skip((page - 1) * limit) */
+    const result = await blogpostQuery.exec()
     res.status(200).json(
-      {
+      /* {
         totalPages: Math.ceil(count / limit),
         currentPage: page,
-      },
-      blogposts
+      }, */
+      result
     )
   } catch (err) {
     res.status(404).json({
