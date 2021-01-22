@@ -146,6 +146,27 @@ app.post('/users', async (req, res) => {
   }
 })
 
+app.post('/login', async (req, res) => {
+  try {
+    const { username, password } = req.body
+    const user = await User.findOne({ username })
+    if (user && bcrypt.compareSync(password, user.password)) {
+      res.status(201).json({ userID: user._id, accesstoken: user.accessToken })
+    } else {
+      res.status(404).json({
+        message:
+          'Oops, something went wrong. Check your username and/or password!',
+      })
+    }
+  } catch (err) {
+    res.status(404).json({
+      message: 'No user found',
+      error_message: err.message,
+      error: err,
+    })
+  }
+})
+
 app.post('/users/:id/blogposts', authenticateUser)
 app.post('/users/:id/blogposts', async (req, res) => {
   try {
@@ -168,18 +189,27 @@ app.post('/users/:id/blogposts', async (req, res) => {
 
 app.get('/blogposts', async (req, res) => {
   try {
-    //const page = req.query.page || 1
+    const { page = 1, limit = 10 } = req.query
     const tags = req.query.tags
-    console.log("TAGS:",tags)
-    const tagArray = tags.split(',')
-    console.log("TAGARRAY:", tagArray)
 
     const blogposts = await BlogPost.find()
-      .where('tags.text').in(tagArray)
+    if (tags) {
+      const tagArray = tags.split(',')
+      blogposts.where('tags.text').in(tagArray)
+    }
+    blogposts
       .sort({ createdAt: 'desc' })
-      .limit(10)
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
       .exec()
-    res.status(200).json(blogposts)
+    const count = await blogposts.countDocuments()
+    res.status(200).json(
+      {
+        totalPages: Math.ceil(count / limit),
+        currentPage: page,
+      },
+      blogposts
+    )
   } catch (err) {
     res.status(404).json({
       message: 'No posts found',
@@ -198,26 +228,6 @@ app.get('/blogposts/:id', async (req, res) => {
       message: 'No posts found with that id',
       error_message: err.message,
       error: err,
-    })
-  }
-})
-
-app.post('/login', async(req, res) => {
-  try{
-    const { username, password } = req.body
-    const user = await User.findOne({ username })
-    if(user && bcrypt.compareSync(password, user.password)) {
-      res.status(200).json({ userID: user._id, accesstoken: user.accessToken })
-    } else {
-      res.status(404).json({
-        message: 'Oops, something went wrong. Check your username and/or password!',
-      })
-    }
-  } catch(err) {
-    res.status(404).json({
-        message: 'No user found',
-        error_message: err.message,
-        error: err
     })
   }
 })
