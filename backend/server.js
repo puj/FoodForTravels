@@ -5,7 +5,12 @@ import mongoose from 'mongoose'
 import crypto from 'crypto'
 import bcrypt from 'bcrypt'
 import endpoints from 'express-list-endpoints'
+import dotenv from 'dotenv'
+import cloudinaryFramework from 'cloudinary'
+import multer from 'multer'
+import cloudinaryStorage from 'multer-storage-cloudinary'
 
+dotenv.config()
 const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost/foodForTravels'
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
 mongoose.Promise = Promise
@@ -16,6 +21,24 @@ const app = express()
 // Add middlewares to enable cors and json body parsing
 app.use(cors())
 app.use(bodyParser.json())
+
+const cloudinary = cloudinaryFramework.v2
+cloudinary.config({
+  cloud_name: 'dpdjckwwc',
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+})
+
+const storage = cloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'foodForTravels',
+    allowedFormats: ['jpg', 'png'],
+    transformation: [{ width: 500, height: 500, crop: 'limit' }],
+  },
+})
+
+const parser = multer({ storage })
 
 const userSchema = mongoose.Schema({
   username: {
@@ -39,9 +62,12 @@ const userSchema = mongoose.Schema({
     default: () => new Date(),
   },
   profileImage: {
-    //Code for adding imagefiles here
-    //default-image?
-    //This is going to be a url-string
+    imageName: {
+      type: String,
+    },
+    imageUrl: {
+      type: String,
+    },
   },
   accessToken: {
     type: String,
@@ -67,7 +93,12 @@ const blogpostSchema = mongoose.Schema(
       },
     ],
     image: {
-      //same code as in profileImage here
+      name: {
+        type: String,
+      },
+      imageUrl: {
+        type: String,
+      },
     },
     comment: [
       {
@@ -112,7 +143,7 @@ const authenticateUser = async (req, res, next) => {
 }
 
 // Start defining your routes here
-//USE PAGINATION
+
 app.get('/', (req, res) => {
   res.send(endpoints(app))
 })
@@ -127,12 +158,11 @@ app.use((req, res, next) => {
 
 app.post('/users', async (req, res) => {
   try {
-    const { username, password, email, profileImage } = req.body
+    const { username, password, email } = req.body
     const user = await new User({
       username,
       password,
       email,
-      profileImage,
     }).save()
     console.log('UserID:', user._id)
     console.log('Accesstoken:', user.accessToken)
@@ -164,6 +194,20 @@ app.post('/login', async (req, res) => {
       error_message: err.message,
       error: err,
     })
+  }
+})
+
+app.post('/users/:id', authenticateUser)
+app.post('/users/:id', parser.single('image'), async(req, res) => {
+  const { id } = req.params
+  try {
+    const userProfile = await User.findOneAndUpdate(
+      { _id: id }, //Check why imageName is null in response
+      { profileImage: { imageName: req.body.filename , imageUrl: req.file.path }},
+      { new: true })
+      res.status(200).json(userProfile)
+  } catch(err) {
+    res.status(400).json({ message: 'Sorry, could not post you profileimage. Check your format, only png or jpg is allowed.', error_message: err.message, error: err})
   }
 })
 
