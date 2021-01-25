@@ -13,7 +13,7 @@ export const Footer = () => {
     flex-direction: column;
     bottom: 0;
   `
-  const StyledH3 = styled.h3`
+  const StyledSubtitle = styled.h3`
     color: #fff;
     font-size: 14px;
     font-weight: 200;
@@ -27,10 +27,10 @@ export const Footer = () => {
 
   return (
     <StyledFooter>
-      <StyledH3>
+      <StyledSubtitle>
         This site was created by Emelie Svensson as a final project for the
         Technigo bootcamp 20/21
-      </StyledH3>
+      </StyledSubtitle>
       <a
         href='https://github.com/emeliesv'
         target='_blank'

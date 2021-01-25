@@ -3,8 +3,8 @@ import { SIGN_UP_URL, LOGIN_URL, GET_BLOGPOST_URL, CREATE_POST_URL } from '../ur
 
 const initialState = {
     login: {
-        accessToken: null,
-        userId: 0,
+        accessToken: localStorage.accessToken || null,
+        userId: localStorage.userId || 0,
         errorMessage: '',
         isLoggedIn: false,
     },
@@ -20,12 +20,14 @@ export const user = createSlice({
         setAccessToken: (state, action) => {
             const { accessToken } = action.payload
             state.login.accessToken = accessToken
+            console.log('accesstoken:', action.payload)
             localStorage.setItem('accessToken', accessToken)
         },
         setUserId: (state, action) => {
             const { userId } =action.payload
             state.login.userId = userId
-            localStorage.setItem('Userid', userId )
+            console.log('userId:', action.payload)
+            localStorage.setItem('userId', userId )
         },
         setErrorMessage: (state, action) => {
             const { errorMessage } = action.payload
@@ -40,8 +42,8 @@ export const blogposts = createSlice({
 })
 
 //THUNKS
-export const handleSignUp = (event) => {
-    event.preventDefault()
+export const signUp = (/* event */ username, email, password) => {
+    //event.preventDefault()
     return(dispatch) => {
       fetch(SIGN_UP_URL, {
         method: 'POST',
@@ -58,7 +60,7 @@ export const handleSignUp = (event) => {
         const formData = new FormData()
         formData.append('image', fileInput.current.files[0])
         fetch(`http://localhost:8080/users/${id}`, {
-            method: 'POST',
+            method: 'PATCH',
             body: formData
         })
     }) */
@@ -72,7 +74,7 @@ export const handleSignUp = (event) => {
     }
 }
 
-export const handleLogin = (event) => {
+export const handleLogin = (event, username, password) => {
     event.preventDefault()
     return(dispatch) => {
         fetch(LOGIN_URL, {
@@ -96,6 +98,16 @@ export const handleLogin = (event) => {
     }
 }
 
+export const handleLogout = () => {
+    return (dispatch) => {
+        dispatch(user.actions.setErrorMessage({ errorMessage: null }))
+        dispatch(user.actions.setAccessToken({ accessToken: null }))
+        dispatch(user.actions.setUserId({ userId: 0 }))
+        localStorage.removeItem('accessToken')
+        localStorage.removeItem('userId')
+    }
+}
+
 /* export const createBlogPost = () => {
     fetch(CREATE_POST_URL, {
         method: 'POST',
@@ -108,6 +120,14 @@ export const handleLogin = (event) => {
         }
         return res.json()
     })
+    //.then(({ id }) => {
+    //    const formData = new FormData()
+    //    formData.append('image', fileInput.current.files[0])
+    //    fetch(`http://localhost:8080/users/${id}`, {
+    //        method: 'PATCH',
+    //        body: formData
+    //    })
+    //})
     .then(json => {
 
     })
