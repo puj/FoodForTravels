@@ -11,6 +11,7 @@ import multer from 'multer'
 import cloudinaryStorage from 'multer-storage-cloudinary'
 
 dotenv.config()
+
 const mongoUrl = process.env.MONGO_URL || 'mongodb://localhost/foodForTravels'
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
 mongoose.Promise = Promise
@@ -18,10 +19,10 @@ mongoose.Promise = Promise
 const port = process.env.PORT || 8080
 const app = express()
 
-// Add middlewares to enable cors and json body parsing
 app.use(cors())
 app.use(bodyParser.json())
 
+//CLOUDINARY
 const cloudinary = cloudinaryFramework.v2
 cloudinary.config({
   cloud_name: 'dpdjckwwc',
@@ -40,6 +41,7 @@ const storage = cloudinaryStorage({
 
 const parser = multer({ storage })
 
+//SCHEMAS
 const userSchema = mongoose.Schema({
   username: {
     type: String,
@@ -93,7 +95,7 @@ const blogpostSchema = mongoose.Schema(
       },
     ],
     image: {
-      name: {
+      imageName: {
         type: String,
       },
       imageUrl: {
@@ -128,6 +130,7 @@ userSchema.pre('save', async function (next) {
   next()
 })
 
+//MODELS
 const User = mongoose.model('User', userSchema)
 
 const BlogPost = mongoose.model('BlogPost', blogpostSchema)
@@ -142,8 +145,7 @@ const authenticateUser = async (req, res, next) => {
   }
 }
 
-// Start defining your routes here
-
+//ROUTES
 app.get('/', (req, res) => {
   res.send(endpoints(app))
 })
@@ -156,6 +158,7 @@ app.use((req, res, next) => {
   }
 })
 
+//CREATE A NEW USER
 app.post('/users', async (req, res) => {
   try {
     const { username, password, email } = req.body
@@ -176,6 +179,7 @@ app.post('/users', async (req, res) => {
   }
 })
 
+//LOGIN IN AS USER
 app.post('/login', async (req, res) => {
   try {
     const { username, password } = req.body
@@ -197,29 +201,31 @@ app.post('/login', async (req, res) => {
   }
 })
 
-app.post('/users/:id', authenticateUser)
-app.post('/users/:id', parser.single('image'), async(req, res) => {
+//ADD PROFILE IMAGE TO USER 
+app.patch('/users/:id', authenticateUser)
+app.patch('/users/:id', parser.single('image'), async(req, res) => {
   const { id } = req.params
   try {
     const userProfile = await User.findOneAndUpdate(
       { _id: id }, //Check why imageName is null in response
-      { profileImage: { imageName: req.body.filename , imageUrl: req.file.path }},
+      { profileImage: { imageName: req.file.filename , imageUrl: req.file.path }},
       { new: true })
       res.status(200).json(userProfile)
   } catch(err) {
-    res.status(400).json({ message: 'Sorry, could not post you profileimage. Check your format, only png or jpg is allowed.', error_message: err.message, error: err})
+    res.status(400).json({ message: 'Sorry, could not post you profileimage. Check your format, only png or jpg is allowed.', error_message: err.message, error: err })
   }
 })
 
-app.post('/users/:id/blogposts', authenticateUser)
+//ADD BLOGPOST AS USER
+//app.post('/users/:id/blogposts', authenticateUser)
 app.post('/users/:id/blogposts', async (req, res) => {
+  //Add code for adding images here as well, or should it be a new post?
   try {
-    const { author, text, tags, image } = req.body
+    const { author, text, tags } = req.body
     const post = await new BlogPost({
       author,
       text,
       tags,
-      image,
     }).save()
     res.status(200).send(post)
   } catch (err) {
@@ -231,6 +237,21 @@ app.post('/users/:id/blogposts', async (req, res) => {
   }
 })
 
+//app.patch('/users/:id/blogposts/:id', authenticateUser)
+app.patch('/users/:id/blogposts/:id', parser.single('image'), async (req, res) => {
+  const { id } = req.params
+  try {
+    const blogPostImage = await BlogPost.findOneAndUpdate(
+      { _id: id },
+      { image: { imageName: req.file.filename, imageUrl: req.file.path }},
+      { new: true })
+      res.status(200).json(blogPostImage)
+  } catch(err) {
+    res.status(400).json({ message: 'Could not update your post. Check your imageformat, only jpg and png allowed', error_message: err.message, error: err })
+  }
+})
+
+//GET BLOGPOSTS
 app.get('/blogposts', async (req, res) => {
   try {
     //const { page = 1, limit = 10 } = req.query
