@@ -22,7 +22,9 @@ const app = express()
 app.use(cors())
 app.use(bodyParser.json())
 
-//CLOUDINARY
+//CLOUDINARY 
+//A great service for storing images in the cloud and accessing them in your database. 
+//You get an image-url which you can use, and can also specify the size of the image
 const cloudinary = cloudinaryFramework.v2
 cloudinary.config({
   cloud_name: 'dpdjckwwc',
@@ -94,7 +96,7 @@ const blogpostSchema = mongoose.Schema(
         text: { type: String },
       },
     ],
-    image: {
+    image: { //Perhaps change this to an array
       imageName: {
         type: String,
       },
@@ -202,6 +204,7 @@ app.post('/login', async (req, res) => {
 })
 
 //ADD PROFILE IMAGE TO USER 
+//This needs to be a patch since we're modifyin an already existing user
 app.patch('/users/:id', authenticateUser)
 app.patch('/users/:id', parser.single('image'), async(req, res) => {
   const { id } = req.params
@@ -217,9 +220,10 @@ app.patch('/users/:id', parser.single('image'), async(req, res) => {
 })
 
 //ADD BLOGPOST AS USER
-//app.post('/users/:id/blogposts', authenticateUser)
+//One cannot combine sending both formdata and a json-body
+//which is why we can't add an image here directly.
+app.post('/users/:id/blogposts', authenticateUser)
 app.post('/users/:id/blogposts', async (req, res) => {
-  //Add code for adding images here as well, or should it be a new post?
   try {
     const { author, text, tags } = req.body
     const post = await new BlogPost({
@@ -237,7 +241,9 @@ app.post('/users/:id/blogposts', async (req, res) => {
   }
 })
 
-//app.patch('/users/:id/blogposts/:id', authenticateUser)
+//ADD IMAGE TO BLOGPOST
+//This also needs to be a patch since we're modifying an already existing blogpost
+app.patch('/users/:id/blogposts/:id', authenticateUser)
 app.patch('/users/:id/blogposts/:id', parser.single('image'), async (req, res) => {
   const { id } = req.params
   try {
