@@ -3,7 +3,7 @@ import styled from 'styled-components/macro'
 import { useDispatch, useSelector } from 'react-redux'
 import { handleLogin, signUp } from '../reducers/user'
 
-import { Button } from './Button'
+import { Button } from './reusable/Button'
 
 const StyledForm = styled.form`
   display: flex;
