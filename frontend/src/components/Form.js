@@ -13,31 +13,45 @@ const StyledForm = styled.form`
   min-width: 50%;
   min-height: 50%;
   background: #fff;
+  padding: 10px;
 `
 const Label = styled.label`
   margin: 10px;
 `
 const Input = styled.input`
   margin-left: 10px;
+  padding: 2px;
   border: none;
   background: #d7ecf3;
 `
 const ImageLabel = styled.label`
-  font-size: 10px;
+  font-size: 0.8em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+
+  @media screen and (min-width: 768px) {
+    font-size: 1em;
+  }
 `
-//Choose wether to have plussign or not
 const PlusSign = styled.span`
-  display: none;
-  font-size: 3em;
-  position: absolute;
+  font-size: 2em;
+
+  @media screen and (min-width: 768px) {
+    font-size: 2.5em;
+  }
 `
 const ImageUploadDiv = styled.div`
   background: #d7ecf3;
-  border-radius: 5px;
-  display: flex;
-  justify-content: center;
-  width: 200px;
-  padding: 15px;
+  border-radius: 10px;
+  width: 150px;
+  padding: 5px;
+
+  @media screen and (min-width: 768px) {
+    width: 200px;
+    padding: 15px;
+  }
 `
 const Filename = styled.p`
   font-size: 1em;
@@ -121,8 +135,7 @@ export const Form = ({ alreadyUser, newUser }) => {
           </Label>
 
           <ImageUploadDiv>
-            <ImageLabel>
-              Choose profileimage
+            <ImageLabel>Upload a profileimage
               <PlusSign>+</PlusSign>
               <Input
                 type='file'
@@ -140,7 +153,7 @@ export const Form = ({ alreadyUser, newUser }) => {
 
           <Button
             buttonType='submit'
-            buttonText='Log In'
+            buttonText='Sign Up'
             onClickFunction={handleSignUp}
           />
         </>
