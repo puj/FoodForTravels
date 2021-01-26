@@ -9,7 +9,7 @@ const initialState = {
         isLoggedIn: false,
     },
     posts: {
-        //array?
+        //array? maybe not in the same initialstate as users?
     }
 }
 

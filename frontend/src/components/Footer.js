@@ -12,12 +12,17 @@ export const Footer = () => {
     align-items: center;
     flex-direction: column;
     bottom: 0;
+    text-align: center;
+    padding: 10px;
   `
   const StyledSubtitle = styled.h3`
     color: #fff;
     font-size: 14px;
     font-weight: 200;
     margin: 0;
+    @media (min-width:1024px) {
+      margin: 5px;
+    }
   `
   const GithubIcon = styled(Icon)`
     width: 30px;
