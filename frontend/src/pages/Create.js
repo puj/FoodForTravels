@@ -1,9 +1,12 @@
 import React from 'react'
 
 import { Form } from '../components/Form'
+import { Wrapper } from '../components/reusable/Containers'
 
 export const Create = () => {
-    return (
-        <Form newUser/>
-    )
+  return (
+    <Wrapper>
+      <Form newUser />
+    </Wrapper>
+  )
 }

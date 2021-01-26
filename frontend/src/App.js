@@ -10,12 +10,7 @@ import { Create } from './pages/Create'
 import { LogIn } from './pages/LogIn'
 import { Header } from './components/Header'
 import { Footer } from './components/Footer'
-
-const Main = styled.main`
-  display: grid;
-  grid-template-rows: min-content;
-  min-height: 100vh;
-`
+import { Main } from './components/reusable/Containers'
 
 const reducer = combineReducers({ user: user.reducer })
 const store = configureStore({ reducer })

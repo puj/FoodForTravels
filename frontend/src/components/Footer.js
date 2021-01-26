@@ -6,11 +6,13 @@ import { ReactComponent as Icon } from '../assets/github.svg'
 export const Footer = () => {
   const StyledFooter = styled.footer`
     background: #353539;
-    height: 10vh;
+    min-height: 10vh;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    position: absolute;
     bottom: 0;
     text-align: center;
     padding: 10px;
@@ -20,8 +22,8 @@ export const Footer = () => {
     font-size: 14px;
     font-weight: 200;
     margin: 0;
-    @media (min-width:1024px) {
-      margin: 5px;
+    @media screen and (min-width: 1024px) {
+      margin: 15px;
     }
   `
   const GithubIcon = styled(Icon)`
