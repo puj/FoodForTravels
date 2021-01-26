@@ -42,7 +42,7 @@ export const blogposts = createSlice({
 })
 
 //THUNKS
-export const signUp = (/* event */ username, email, password) => {
+export const signUp = (/* event */ username, email, password, fileInput) => {
     //event.preventDefault()
     return(dispatch) => {
       fetch(SIGN_UP_URL, {
@@ -56,17 +56,17 @@ export const signUp = (/* event */ username, email, password) => {
         }
         return res.json()
     })
-    /* .then(({ id }) => {
+    .then(json => {
+        dispatch(user.actions.setAccessToken({ accessToken: json.accessToken}))
+        dispatch(user.actions.setUserId({ userId: json.userId }))
+    })
+    .then(({ id }) => {
         const formData = new FormData()
         formData.append('image', fileInput.current.files[0])
         fetch(`http://localhost:8080/users/${id}`, {
             method: 'PATCH',
             body: formData
         })
-    }) */
-    .then(json => {
-        dispatch(user.actions.setAccessToken({ accessToken: json.accessToken}))
-        dispatch(user.actions.setUserId({ userId: json.userId }))
     })
     .catch(err => {
         dispatch(user.actions.setErrorMessage({ errorMessage: err.toString() }))

@@ -72,7 +72,7 @@ export const Form = ({ alreadyUser, newUser }) => {
   }
 
   const handleSignUp = () => {
-    dispatch(signUp(username, email, password))
+    dispatch(signUp(username, email, password, fileInput))
   }
 
   return (
