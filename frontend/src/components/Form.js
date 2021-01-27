@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react'
 import styled from 'styled-components/macro'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+
 import { handleLogin, signUp } from '../reducers/user'
 
 import { Button } from './reusable/Button'
@@ -135,7 +137,8 @@ export const Form = ({ alreadyUser, newUser }) => {
           </Label>
 
           <ImageUploadDiv>
-            <ImageLabel>Upload a profileimage
+            <ImageLabel>
+              Upload a profileimage
               <PlusSign>+</PlusSign>
               <Input
                 type='file'
@@ -151,11 +154,15 @@ export const Form = ({ alreadyUser, newUser }) => {
           </ImageUploadDiv>
           <Filename>{fileName}</Filename>
 
-          <Button
-            buttonType='submit'
-            buttonText='Sign Up'
-            onClickFunction={handleSignUp}
-          />
+          <div>
+            {/* <Link to={`users/${id}/blogposts`}> */}
+            <Button
+              buttonType='submit'
+              buttonText='Sign Up'
+              onClickFunction={handleSignUp}
+            />
+            {/* </Link> */}
+          </div>
         </>
       )}
       {errorMessage && <p>{`${errorMessage}`}</p>}

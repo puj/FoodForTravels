@@ -44,7 +44,7 @@ export const blogposts = createSlice({
 //THUNKS
 export const signUp = (/* event */ username, email, password, fileInput) => {
     //event.preventDefault()
-    return(dispatch) => {
+    return(dispatch, getStore) => {
       fetch(SIGN_UP_URL, {
         method: 'POST',
         body: JSON.stringify({ username, email, password }),
@@ -60,12 +60,12 @@ export const signUp = (/* event */ username, email, password, fileInput) => {
         dispatch(user.actions.setAccessToken({ accessToken: json.accessToken}))
         dispatch(user.actions.setUserId({ userId: json.userId }))
     })
-    .then(({ id }) => {
+    .then(({ userId }) => {
         const formData = new FormData()
         formData.append('image', fileInput.current.files[0])
-        fetch(`http://localhost:8080/users/${id}`, {
+        fetch(`http://localhost:8080/users/${userId}`, {
             method: 'PATCH',
-            body: formData
+            body: formData, 
         })
     })
     .catch(err => {
@@ -75,7 +75,7 @@ export const signUp = (/* event */ username, email, password, fileInput) => {
 }
 
 export const handleLogin = (event, username, password) => {
-    event.preventDefault()
+    //event.preventDefault()
     return(dispatch) => {
         fetch(LOGIN_URL, {
             method: 'POST',

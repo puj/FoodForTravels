@@ -8,6 +8,7 @@ import { user } from './reducers/user'
 import { StartPage } from './pages/StartPage'
 import { Create } from './pages/Create'
 import { LogIn } from './pages/LogIn'
+import { BlogFeed } from './pages/BlogFeed'
 import { Header } from './components/Header'
 import { Footer } from './components/Footer'
 import { Main } from './components/reusable/Containers'
@@ -25,6 +26,7 @@ export const App = () => {
             <Route path='/' exact component={StartPage} />
             <Route path='/users' exact component={Create} />
             <Route path='/login' exact component={LogIn} />
+            {/* <Route path={`/users/${id}/blogposts`} exact component={BlogFeed}/> */}
           </Switch>
           <Footer />
         </Router>
