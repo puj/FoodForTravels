@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+
 import { SIGN_UP_URL, LOGIN_URL, GET_BLOGPOST_URL, CREATE_POST_URL } from '../urls'
 
 const initialState = {
@@ -60,13 +61,15 @@ export const signUp = (/* event */ username, email, password, fileInput) => {
         dispatch(user.actions.setAccessToken({ accessToken: json.accessToken}))
         dispatch(user.actions.setUserId({ userId: json.userId }))
     })
-    .then(({ userId }) => {
+    .then(() => {
+        const userId = getStore().user.login.userId
         const formData = new FormData()
         formData.append('image', fileInput.current.files[0])
         fetch(`http://localhost:8080/users/${userId}`, {
             method: 'PATCH',
             body: formData, 
         })
+        .then(res => res.json())
     })
     .catch(err => {
         dispatch(user.actions.setErrorMessage({ errorMessage: err.toString() }))
@@ -74,8 +77,8 @@ export const signUp = (/* event */ username, email, password, fileInput) => {
     }
 }
 
-export const handleLogin = (event, username, password) => {
-    //event.preventDefault()
+export const handleLogin = ( username, password) => {
+    console.log(username, password)
     return(dispatch) => {
         fetch(LOGIN_URL, {
             method: 'POST',
