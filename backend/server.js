@@ -186,12 +186,13 @@ app.post('/login', async (req, res) => {
   try {
     const { username, password } = req.body
     const user = await User.findOne({ username })
+    console.log('User:', user)
     if (user && bcrypt.compareSync(password, user.password)) {
       res.status(201).json({ userID: user._id, accesstoken: user.accessToken })
     } else {
       res.status(404).json({
         message:
-          'Oops, something went wrong. Check your username and/or password!',
+          'Oops, something went wrong. Check your username and/or password!'
       })
     }
   } catch (err) {
@@ -205,7 +206,7 @@ app.post('/login', async (req, res) => {
 
 //ADD PROFILE IMAGE TO USER 
 //This needs to be a patch since we're modifyin an already existing user
-app.patch('/users/:id', authenticateUser)
+//app.patch('/users/:id', authenticateUser)
 app.patch('/users/:id', parser.single('image'), async(req, res) => {
   const { id } = req.params
   try {

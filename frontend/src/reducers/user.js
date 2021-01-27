@@ -43,8 +43,7 @@ export const blogposts = createSlice({
 })
 
 //THUNKS
-export const signUp = (/* event */ username, email, password, fileInput) => {
-    //event.preventDefault()
+export const signUp = (username, email, password, fileInput) => {
     return(dispatch, getStore) => {
       fetch(SIGN_UP_URL, {
         method: 'POST',
