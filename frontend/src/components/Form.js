@@ -3,7 +3,7 @@ import styled from 'styled-components/macro'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { handleLogin, signUp } from '../reducers/user'
+import { login, signUp } from '../reducers/user'
 
 import { Button } from './reusable/Button'
 
@@ -77,6 +77,10 @@ export const Form = ({ alreadyUser, newUser }) => {
     dispatch(signUp(username, email, password, fileInput))
   }
 
+  const handleLogin = () => {
+    dispatch(login(username, password))
+  }
+
   return (
     <StyledForm onSubmit={handleSubmit}>
       {alreadyUser && (
@@ -102,7 +106,7 @@ export const Form = ({ alreadyUser, newUser }) => {
           <Button
             buttonType='submit'
             buttonText='Log In'
-            onClickFunction={() => dispatch(handleLogin(username, password))}
+            onClickFunction={handleLogin}
           />
         </>
       )}

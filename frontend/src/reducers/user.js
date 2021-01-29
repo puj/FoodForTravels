@@ -25,7 +25,8 @@ export const user = createSlice({
             localStorage.setItem('accessToken', accessToken)
         },
         setUserId: (state, action) => {
-            const { userId } =action.payload
+            const { userId } = action.payload
+            console.log('Action:', action)
             state.login.userId = userId
             console.log('userId:', action.payload)
             localStorage.setItem('userId', userId )
@@ -33,6 +34,16 @@ export const user = createSlice({
         setErrorMessage: (state, action) => {
             const { errorMessage } = action.payload
             state.login.errorMessage = errorMessage
+        },
+        setLoggedInState: (state, action) => {
+            const { login } = action.payload
+            /* state.login.isLoggedIn = true */
+        },
+        setLogOutState: (state, action) => {
+            state.login.userId = 0
+            state.login.accessToken = null
+            state.login.errorMessage = ''
+            state.login.isLoggedIn = false
         }
     }
 })
@@ -58,7 +69,7 @@ export const signUp = (username, email, password, fileInput) => {
     })
     .then(json => {
         dispatch(user.actions.setAccessToken({ accessToken: json.accessToken}))
-        dispatch(user.actions.setUserId({ userId: json.userId }))
+        dispatch(user.actions.setUserId({ userId: json.userID }))
     })
     .then(() => {
         const userId = getStore().user.login.userId
@@ -76,7 +87,7 @@ export const signUp = (username, email, password, fileInput) => {
     }
 }
 
-export const handleLogin = ( username, password) => {
+export const login = ( username, password) => {
     console.log(username, password)
     return(dispatch) => {
         fetch(LOGIN_URL, {
@@ -91,8 +102,11 @@ export const handleLogin = ( username, password) => {
             return res.json()
         })
         .then(json => {
+            console.log(json)
             dispatch(user.actions.setAccessToken({ accessToken: json.accessToken }))
-            dispatch(user.actions.setUserId({ userId: json.userId }))
+            console.log('JSON ACCESS:',json.accessToken)
+            //console.log('JSON STRINGIFIED:', json.accessToken.toString())
+            dispatch(user.actions.setUserId({ userId: json.userID }))
         })
         .catch(err => {
             dispatch(user.actions.setErrorMessage({ errorMessage: err.toString() }))
