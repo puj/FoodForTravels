@@ -63,7 +63,7 @@ const Filename = styled.p`
 export const Form = ({ alreadyUser, newUser }) => {
   const dispatch = useDispatch()
   const errorMessage = useSelector((store) => store.user.login.errorMessage)
-  //const accesstoken = useSelector(store => store.user.login.accessToken)
+  const accesstoken = useSelector(store => store.user.login.accessToken)
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -105,7 +105,7 @@ export const Form = ({ alreadyUser, newUser }) => {
             />
           </Label>
           {/* How can I make sure that this link only works if the is an accesstoken?*/}
-          <Link to={'/'}>
+          <Link to={accesstoken?'/':'/login'}>
           <Button
             buttonType='submit'
             buttonText='Log In'
