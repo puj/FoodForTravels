@@ -163,13 +163,13 @@ export const Form = ({ alreadyUser, newUser }) => {
           <Filename>{fileName}</Filename>
 
           <div>
-            {/* <Link to={`users/${id}/blogposts`}> */}
+            <Link to={`/`}>
             <Button
               buttonType='submit'
               buttonText='Sign Up'
               onClickFunction={handleSignUp}
             />
-            {/* </Link> */}
+            </Link>
           </div>
         </>
       )}

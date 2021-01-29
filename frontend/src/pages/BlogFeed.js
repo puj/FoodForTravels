@@ -8,14 +8,16 @@ import { CreatePost } from '../components/CreatePost'
 import { Button } from '../components/reusable/Button'
 
 export const BlogFeed = () => {
+  const username = useSelector(store => store.user.login.username)
   const dispatch = useDispatch()
 
   const handleLogout = () => {
     dispatch(logout())
   }
+
   return (
     <>
-      <h1>HEllo!</h1>
+      <h1>{`Hello ${username}!`}</h1>
       <CreatePost />
       <Link to='/'>
         <Button buttonText='Log out' onClickFunction={handleLogout} />

@@ -86,6 +86,11 @@ const blogpostSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
+    title: {
+      type: String,
+      required: true,
+      minlength: 2,
+    },
     text: {
       type: String,
       required: true,
@@ -225,9 +230,10 @@ app.patch('/users/:id', parser.single('image'), async(req, res) => {
 app.post('/users/:id/blogposts', authenticateUser)
 app.post('/users/:id/blogposts', async (req, res) => {
   try {
-    const { author, text, tags } = req.body
+    const { author, text, title, tags } = req.body
     const post = await new BlogPost({
       author,
+      title,
       text,
       tags,
     }).save()
