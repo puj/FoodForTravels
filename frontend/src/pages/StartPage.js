@@ -1,20 +1,41 @@
 import React from 'react'
-import styled from 'styled-components/macro'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
-//import { Header } from '../components/Header'
-//import { Footer } from '../components/Footer'
 import { Searchbar } from '../components/Searchbar'
 import { Wrapper } from '../components/reusable/Containers'
-//import { CreatePost } from '../components/CreatePost'
-//import { LogIn } from './LogIn'
-//import { Create } from './Create'
+import { Button } from 'components/reusable/Button'
+import { logout } from 'reducers/user'
+
 
 export const StartPage = () => {
-  return (
+  const dispatch = useDispatch()
+  const accesstoken = useSelector(state => state.user.login.accessToken)
+  const username = useSelector(state => state.user.login.username)
+
+  const handleLogout = () => {
+    dispatch(logout())
+  }
+
+  if(!accesstoken) {
+    return(
     <>
       <Wrapper>
         <Searchbar />
       </Wrapper>
     </>
-  )
+  )} else {
+    return (
+     <Wrapper>
+      <div>{`Welcome ${username}! You are logged in!`}</div>
+      <Link to='/blogfeed'>
+        <Button
+        buttonText='Create new post'/>
+      </Link>
+      <Button 
+      buttonText='Log Out!'
+      onClickFunction={handleLogout}/>
+    </Wrapper> 
+    )
+  }
 }

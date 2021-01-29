@@ -26,6 +26,7 @@ export const App = () => {
             <Route path='/' exact component={StartPage} />
             <Route path='/users' exact component={Create} />
             <Route path='/login' exact component={LogIn} />
+            <Route path='/blogfeed' exact component={BlogFeed} />
             {/* <Route path={`/users/${id}/blogposts`} exact component={BlogFeed}/> */}
           </Switch>
           <Footer />

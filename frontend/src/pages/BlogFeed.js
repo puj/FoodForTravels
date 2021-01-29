@@ -1,14 +1,25 @@
 import React from 'react'
-import { handleLogout } from '../reducers/user'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
+import { logout } from 'reducers/user'
+
+import { CreatePost } from '../components/CreatePost'
 import { Button } from '../components/reusable/Button'
 
-
 export const BlogFeed = () => {
-    return(
-        <>
-        <h1>HEllo!</h1>
-        <Button onClickFunction={handleLogout}/>
-        </>
-    )
+  const dispatch = useDispatch()
+
+  const handleLogout = () => {
+    dispatch(logout())
+  }
+  return (
+    <>
+      <h1>HEllo!</h1>
+      <CreatePost />
+      <Link to='/'>
+        <Button buttonText='Log out' onClickFunction={handleLogout} />
+      </Link>
+    </>
+  )
 }

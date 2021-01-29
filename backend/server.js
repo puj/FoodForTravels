@@ -171,7 +171,7 @@ app.post('/users', async (req, res) => {
     }).save()
     console.log('UserID:', user._id)
     console.log('Accesstoken:', user.accessToken)
-    res.status(201).json({ userId: user._id, accessToken: user.accessToken })
+    res.status(201).json({ userId: user._id, accessToken: user.accessToken, username: user.username })
   } catch (err) {
     res.status(400).json({
       message: 'Create was unsuccessful',
@@ -182,13 +182,13 @@ app.post('/users', async (req, res) => {
 })
 
 //LOGIN IN AS USER
-app.post('/login', async (req, res) => {
+app.post('/sessions', async (req, res) => {
   try {
     const { username, password } = req.body
     const user = await User.findOne({ username })
     console.log('User:', user)
     if (user && bcrypt.compareSync(password, user.password)) {
-      res.status(201).json({ userID: user._id, accessToken: user.accessToken })
+      res.status(201).json({ userID: user._id, accessToken: user.accessToken, username: user.username })
     } else {
       res.status(404).json({
         message:
@@ -260,10 +260,7 @@ app.patch('/users/:id/blogposts/:id', parser.single('image'), async (req, res) =
 //GET BLOGPOSTS
 app.get('/blogposts', async (req, res) => {
   try {
-    //const { page = 1, limit = 10 } = req.query
-    //const count = BlogPost.countDocuments()
     const tags = req.query.tags
-
     const blogpostQuery = BlogPost.find()
     if (tags) {
       const tagArray = tags.split(',')
@@ -271,14 +268,9 @@ app.get('/blogposts', async (req, res) => {
     }
     blogpostQuery
       .sort({ createdAt: 'desc' })
-      .limit(10/* limit * 1 */)
-      /* .skip((page - 1) * limit) */
+      .limit(10)
     const result = await blogpostQuery.exec()
     res.status(200).json(
-      /* {
-        totalPages: Math.ceil(count / limit),
-        currentPage: page,
-      }, */
       result
     )
   } catch (err) {

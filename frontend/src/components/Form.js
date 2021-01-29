@@ -63,6 +63,7 @@ const Filename = styled.p`
 export const Form = ({ alreadyUser, newUser }) => {
   const dispatch = useDispatch()
   const errorMessage = useSelector((store) => store.user.login.errorMessage)
+  //const accesstoken = useSelector(store => store.user.login.accessToken)
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -78,7 +79,7 @@ export const Form = ({ alreadyUser, newUser }) => {
   }
 
   const handleLogin = () => {
-    dispatch(login(username, password))
+      dispatch(login(username, password))
   }
 
   return (
@@ -103,11 +104,14 @@ export const Form = ({ alreadyUser, newUser }) => {
               onChange={(event) => setPassword(event.target.value)}
             />
           </Label>
+          {/* How can I make sure that this link only works if the is an accesstoken?*/}
+          <Link to={'/'}>
           <Button
             buttonType='submit'
             buttonText='Log In'
             onClickFunction={handleLogin}
           />
+          </Link>
         </>
       )}
       {newUser && (

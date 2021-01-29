@@ -4,14 +4,12 @@ import { SIGN_UP_URL, LOGIN_URL, GET_BLOGPOST_URL, CREATE_POST_URL } from '../ur
 
 const initialState = {
     login: {
+        username: '',
         accessToken: localStorage.accessToken || null,
         userId: localStorage.userId || 0,
         errorMessage: '',
         isLoggedIn: false,
     },
-    posts: {
-        //array? maybe not in the same initialstate as users?
-    }
 }
 
 export const user = createSlice({
@@ -21,30 +19,32 @@ export const user = createSlice({
         setAccessToken: (state, action) => {
             const { accessToken } = action.payload
             state.login.accessToken = accessToken
-            console.log('accesstoken:', action.payload)
             localStorage.setItem('accessToken', accessToken)
         },
         setUserId: (state, action) => {
             const { userId } = action.payload
-            console.log('Action:', action)
             state.login.userId = userId
-            console.log('userId:', action.payload)
             localStorage.setItem('userId', userId )
         },
         setErrorMessage: (state, action) => {
             const { errorMessage } = action.payload
             state.login.errorMessage = errorMessage
         },
-        setLoggedInState: (state, action) => {
+        setUsername: (state, action) => {
+            const { username } = action.payload
+            state.login.username = username
+            localStorage.setItem('username', username)
+        }
+        /* setLoggedInState: (state, action) => {
             const { login } = action.payload
-            /* state.login.isLoggedIn = true */
-        },
-        setLogOutState: (state, action) => {
+            /* state.login.isLoggedIn = true
+        }, */
+       /*  setLogOutState: (state, action) => {
             state.login.userId = 0
             state.login.accessToken = null
             state.login.errorMessage = ''
             state.login.isLoggedIn = false
-        }
+        } */
     }
 })
 
@@ -70,6 +70,7 @@ export const signUp = (username, email, password, fileInput) => {
     .then(json => {
         dispatch(user.actions.setAccessToken({ accessToken: json.accessToken}))
         dispatch(user.actions.setUserId({ userId: json.userID }))
+        dispatch(user.actions.setUsername({ username: json.username }))
     })
     .then(() => {
         const userId = getStore().user.login.userId
@@ -102,11 +103,9 @@ export const login = ( username, password) => {
             return res.json()
         })
         .then(json => {
-            console.log(json)
             dispatch(user.actions.setAccessToken({ accessToken: json.accessToken }))
-            console.log('JSON ACCESS:',json.accessToken)
-            //console.log('JSON STRINGIFIED:', json.accessToken.toString())
             dispatch(user.actions.setUserId({ userId: json.userID }))
+            dispatch(user.actions.setUsername({ username: json.username }))
         })
         .catch(err => {
             dispatch(user.actions.setErrorMessage({ errorMessage: err.toString() }))
@@ -114,20 +113,21 @@ export const login = ( username, password) => {
     }
 }
 
-export const handleLogout = () => {
+export const logout = () => {
     return (dispatch) => {
         dispatch(user.actions.setErrorMessage({ errorMessage: null }))
         dispatch(user.actions.setAccessToken({ accessToken: null }))
         dispatch(user.actions.setUserId({ userId: 0 }))
         localStorage.removeItem('accessToken')
         localStorage.removeItem('userId')
+        localStorage.removeItem('username')
     }
 }
 
-/* export const createBlogPost = () => {
+export const createBlogPost = (author, text, tags) => {
     fetch(CREATE_POST_URL, {
         method: 'POST',
-        body: JSON-stringify({ author, text, tags }),
+        body: JSON.stringify({ author, text, tags }),
         headers: { 'Content-Type': 'application/json'},
     })
     .then(res => {
@@ -136,18 +136,18 @@ export const handleLogout = () => {
         }
         return res.json()
     })
-    //.then(({ id }) => {
-    //    const formData = new FormData()
-    //    formData.append('image', fileInput.current.files[0])
-    //    fetch(`http://localhost:8080/users/${id}`, {
-    //        method: 'PATCH',
-    //        body: formData
-    //    })
-    //})
+    /* .then(({ id }) => {
+        const formData = new FormData()
+        formData.append('image', fileInput.current.files[0])
+        fetch(`http://localhost:8080/users/${id}`, {
+            method: 'PATCH',
+            body: formData
+        })
+    }) */
     .then(json => {
-
+        console.log(json)
     })
-} */
+} 
 
 export const fetchBlogPost = () => {
     fetch(GET_BLOGPOST_URL, {
