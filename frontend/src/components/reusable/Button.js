@@ -8,15 +8,21 @@ const StyledButton = styled.button`
   border: none;
   padding: 5px 10px;
   cursor: pointer;
-  ${({ logout }) =>
-    logout &&`
-     background: #353539;
-    `}
+  ${({ logoutbutton }) =>
+    logoutbutton &&
+    `
+  background: #353539;
+  color: #d7ecf3;
+  margin: 5px;
+  &:hover {
+    transform: scale(1.1);
+  }
+  `}
 `
 
-export const Button = ({ buttonText, buttonType, onClickFunction }) => {
+export const Button = ({ logoutbutton, buttonText, buttonType, onClickFunction }) => {
   return (
-    <StyledButton type={buttonType} onClick={onClickFunction}>
+    <StyledButton logoutbutton={logoutbutton} type={buttonType} onClick={onClickFunction}>
       {buttonText}
     </StyledButton>
   )

@@ -163,7 +163,7 @@ export const Form = ({ alreadyUser, newUser }) => {
           <Filename>{fileName}</Filename>
 
           <div>
-            <Link to={`/`}>
+            <Link to={accesstoken? `/`:`/signup`}>
             <Button
               buttonType='submit'
               buttonText='Sign Up'

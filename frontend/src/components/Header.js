@@ -66,7 +66,7 @@ export const Header = () => {
       ) : (
         <Links>
           <Link to='/'><LinkText>Home</LinkText></Link>
-          <Link to='/users'><LinkText>Sign Up</LinkText></Link>
+          <Link to='/signup'><LinkText>Sign Up</LinkText></Link>
           <Link to='/login'><LinkText>Log in</LinkText></Link>
         </Links>
       )}
