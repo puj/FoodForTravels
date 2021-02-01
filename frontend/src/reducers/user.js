@@ -43,9 +43,9 @@ export const user = createSlice({
     },
     setProfileImage: (state, action) => {
       console.log('Action payload:', action.payload)
-      const { imageurl } = action.payload
-      state.login.profileImage = imageurl
-      localStorage.setItem('imageurl', imageurl)
+      const { profileImage } = action.payload
+      state.login.profileImage = profileImage
+      localStorage.setItem('imageurl', profileImage) //set this string as a variable to avoid confusion
     }
   },
 })
