@@ -42,6 +42,7 @@ export const user = createSlice({
       localStorage.setItem('username', username)
     },
     setProfileImage: (state, action) => {
+      console.log('Action payload:', action.payload)
       const { imageurl } = action.payload
       state.login.profileImage = imageurl
       localStorage.setItem('imageurl', imageurl)
@@ -73,14 +74,16 @@ export const signUp = (username, email, password, fileInput) => {
       })
       .then((json) => {
         console.log('Json again:', json)
-        const userId = /* json.userId */getStore().user.login.userId
+        const userId = getStore().user.login.userId
         console.log('UserId:', userId)
         const formData = new FormData()
         formData.append('image', fileInput.current.files[0])
         fetch(`http://localhost:8080/users/${userId}`, {
           method: 'PATCH',
           body: formData,
-        }).then((res) => res.json())
+        }).then((res) => res.json()).then(json => {
+          dispatch(user.actions.setProfileImage({ profileImage: json.profileImage.imageUrl}))
+        })
       })
       .catch((err) => {
         dispatch(user.actions.setErrorMessage({ errorMessage: err.toString() }))
@@ -108,6 +111,7 @@ export const login = (username, password) => {
         dispatch(user.actions.setAccessToken({ accessToken: json.accessToken }))
         dispatch(user.actions.setUserId({ userId: json.userId }))
         dispatch(user.actions.setUsername({ username: json.username }))
+        dispatch(user.actions.setProfileImage({ profileImage: json.profileImage.imageUrl }))
         console.log('User in redux:', user.userId, user.accessToken, user.username)
       })
       .catch((err) => {
@@ -121,9 +125,12 @@ export const logout = () => {
     dispatch(user.actions.setErrorMessage({ errorMessage: null }))
     dispatch(user.actions.setAccessToken({ accessToken: null }))
     dispatch(user.actions.setUserId({ userId: 0 }))
+    dispatch(user.actions.setUsername({ username: '' }))
+    dispatch(user.actions.setProfileImage({ profileImage: '' }))
     localStorage.removeItem('accessToken')
     localStorage.removeItem('userId')
     localStorage.removeItem('username')
+    localStorage.removeItem('imageurl')
   }
 }
 

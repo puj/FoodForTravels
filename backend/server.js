@@ -176,7 +176,7 @@ app.post('/users', async (req, res) => {
     }).save()
     console.log('UserID:', user._id)
     console.log('Accesstoken:', user.accessToken)
-    res.status(201).json({ userId: user._id, accessToken: user.accessToken, username: user.username })
+    res.status(201).json({ userId: user._id, accessToken: user.accessToken, username: user.username, profileImage: user.profileImage.imageUrl })
   } catch (err) {
     res.status(400).json({
       message: 'Create was unsuccessful',
@@ -193,7 +193,7 @@ app.post('/sessions', async (req, res) => {
     const user = await User.findOne({ username })
     console.log('User:', user)
     if (user && bcrypt.compareSync(password, user.password)) {
-      res.status(201).json({ userId: user._id, accessToken: user.accessToken, username: user.username })
+      res.status(201).json({ userId: user._id, accessToken: user.accessToken, username: user.username, profileImage: user.profileImage.imageUrl })
     } else {
       res.status(404).json({
         message:
@@ -215,10 +215,11 @@ app.patch('/users/:id', parser.single('image'), async(req, res) => {
   const { id } = req.params
   try {
     const userProfile = await User.findOneAndUpdate(
-      { _id: id }, //Check why imageName is null in response
+      { _id: id },
       { profileImage: { imageName: req.file.filename , imageUrl: req.file.path }},
       { new: true })
       res.status(200).json(userProfile)
+      console.log('Userprofile:', userProfile)
   } catch(err) {
     res.status(400).json({ message: 'Sorry, could not post you profileimage. Check your format, only png or jpg is allowed.', error_message: err.message, error: err })
   }
