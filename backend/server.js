@@ -193,7 +193,7 @@ app.post('/sessions', async (req, res) => {
     const user = await User.findOne({ username })
     console.log('User:', user)
     if (user && bcrypt.compareSync(password, user.password)) {
-      res.status(201).json({ userID: user._id, accessToken: user.accessToken, username: user.username })
+      res.status(201).json({ userID: user._id, accessToken: user.accessToken, username: user.username, profileImage: user.profileImage.imageUrl })
     } else {
       res.status(404).json({
         message:
