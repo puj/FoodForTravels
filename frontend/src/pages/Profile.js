@@ -12,6 +12,7 @@ import { Wrapper } from '../components/reusable/Containers'
 export const Profile = () => {
   const username = useSelector(store => store.user.login.username)
   const accesstoken = useSelector(state => state.user.login.accessToken)
+  const imageurl = useSelector(state => state.user.login.profileImage)
   const dispatch = useDispatch()
 
   const handleLogout = () => {

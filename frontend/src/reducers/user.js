@@ -9,7 +9,8 @@ import {
 
 const initialState = {
   login: {
-    username: '',
+    username: localStorage.username || '',
+    profileImage: localStorage.imageurl || '',
     accessToken: localStorage.accessToken || null,
     userId: localStorage.userId || 0,
     errorMessage: '',
@@ -40,13 +41,14 @@ export const user = createSlice({
       state.login.username = username
       localStorage.setItem('username', username)
     },
+    setProfileImage: (state, action) => {
+      const { imageurl } = action.payload
+      state.login.profileImage = imageurl
+      localStorage.setItem('imageurl', imageurl)
+    }
   },
 })
 
-/* export const blogposts = createSlice({
-    name: 'blogposts',
-
-}) */
 
 //THUNKS
 export const signUp = (username, email, password, fileInput) => {
@@ -63,12 +65,16 @@ export const signUp = (username, email, password, fileInput) => {
         return res.json()
       })
       .then((json) => {
+        console.log('ResponseJson sign up:', json)
         dispatch(user.actions.setAccessToken({ accessToken: json.accessToken }))
-        dispatch(user.actions.setUserId({ userId: json.userID }))
+        dispatch(user.actions.setUserId({ userId: json._id }))
         dispatch(user.actions.setUsername({ username: json.username }))
+        /* return json */
       })
-      .then(() => {
+      .then((/* json */) => {
         const userId = getStore().user.login.userId
+        /* const userId=json._id */
+        console.log('Userid:',userId)
         const formData = new FormData()
         formData.append('image', fileInput.current.files[0])
         fetch(`http://localhost:8080/users/${userId}`, {
@@ -98,6 +104,7 @@ export const login = (username, password) => {
         return res.json()
       })
       .then((json) => {
+        console.log('response json sign in:', json)
         dispatch(user.actions.setAccessToken({ accessToken: json.accessToken }))
         dispatch(user.actions.setUserId({ userId: json.userID }))
         dispatch(user.actions.setUsername({ username: json.username }))

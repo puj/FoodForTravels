@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import { Card } from 'components/reusable/Card'
 import { GridFeed } from 'components/reusable/Containers'
@@ -40,25 +41,33 @@ export const BlogFeed = () => {
     },
     {
       title: 'Best food ever',
-      blogtext: 'Pizza. Pasta. Anything with butter and salt.'
+      blogtext: 'Pizza. Pasta. Anything with butter and salt.',
     },
     {
       title: 'Can you eat bugs?',
       blogtext:
-        'Yes. My friend ate a deepfried spider in madagaskar and said it tasted like paté. I wouldnt like to try it though..'
+        'Yes. My friend ate a deepfried spider in madagaskar and said it tasted like paté. I wouldnt like to try it though..',
     },
     {
       title: 'Last title for dummies',
-      blogtext: 'Last dummytext for testing out my layout.'
+      blogtext: 'Last dummytext for testing out my layout.',
     },
   ]
 
   return (
     <GridFeed>
       {blogpostarr.map((blogpost) => {
-        return(
-          <Card blogfeed gridpost={true} heading={blogpost.title} innertext={blogpost.blogtext}/>
-      )})}
+        return (
+          <Link to={`/blogposts/${blogpost._id}`}>
+            <Card
+              blogfeed
+              gridpost={true}
+              heading={blogpost.title}
+              innertext={blogpost.blogtext}
+            />
+          </Link>
+        )
+      })}
     </GridFeed>
   )
 }

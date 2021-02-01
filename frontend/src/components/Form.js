@@ -75,6 +75,7 @@ export const Form = ({ alreadyUser, newUser }) => {
   }
 
   const handleSignUp = () => {
+    console.log('file:', fileInput)
     dispatch(signUp(username, email, password, fileInput))
   }
 
