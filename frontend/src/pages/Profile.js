@@ -5,23 +5,35 @@ import { Link } from 'react-router-dom'
 import { logout } from 'reducers/user'
 
 import { CreatePost } from '../components/CreatePost'
+import { Card } from '../components/reusable/Card'
 import { Button } from '../components/reusable/Button'
+import { Wrapper } from '../components/reusable/Containers'
 
 export const Profile = () => {
   const username = useSelector(store => store.user.login.username)
+  const accesstoken = useSelector(state => state.user.login.accessToken)
   const dispatch = useDispatch()
 
   const handleLogout = () => {
     dispatch(logout())
   }
 
-  return (
-    <>
-      <h1>{`Hello ${username}!`}</h1>
-      <CreatePost />
-      <Link to='/'>
-        <Button logoutbutton={true} buttonText='Log out' onClickFunction={handleLogout} />
-      </Link>
-    </>
-  )
+  if(!accesstoken) {
+    return(
+      <Wrapper>
+      <Card heading='Oops!' innertext='You need to log in to see this page'/>
+    </Wrapper>
+    )
+  } else {
+    return (
+      <Wrapper>
+        <h1>{`Hello ${username}!`}</h1>
+        <Card profile heading={username} innertext='This is an innertext'/>
+        <CreatePost />
+        <Link to='/'>
+          <Button logoutbutton={true} buttonText='Log out' onClickFunction={handleLogout} />
+        </Link>
+      </Wrapper>
+    )
+  }
 }

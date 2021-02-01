@@ -1,5 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
+
+import { Card } from 'components/reusable/Card'
+import { GridFeed } from 'components/reusable/Containers'
 
 export const BlogFeed = () => {
   const blogpostarr = [
@@ -51,34 +53,12 @@ export const BlogFeed = () => {
     },
   ]
 
-  const Card = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 150px;
-  height: 150px;
-  overflow: hidden;
-  border-radius: 5px;
-  background: #fff;
-  margin: 5px;
-  `
-  const FeedGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: min-content;
-  justify-items: center;
-  width: 100%;
-  margin: 3em 2em 1em 2em;
-  `
-
   return (
-    <FeedGrid>
+    <GridFeed>
       {blogpostarr.map((blogpost) => {
         return(
-        <Card>
-          <h3>{blogpost.title}</h3>
-          <p>{blogpost.blogtext}</p>
-        </Card>
+          <Card blogfeed gridpost={true} heading={blogpost.title} innertext={blogpost.blogtext}/>
       )})}
-    </FeedGrid>
+    </GridFeed>
   )
 }

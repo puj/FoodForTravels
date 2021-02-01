@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 const StyledSearchbar = styled.input`
     border-radius: 15px;
