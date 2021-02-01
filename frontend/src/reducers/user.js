@@ -63,12 +63,16 @@ export const signUp = (username, email, password, fileInput) => {
         return res.json()
       })
       .then((json) => {
+        console.log('Json:', json)
         dispatch(user.actions.setAccessToken({ accessToken: json.accessToken }))
-        dispatch(user.actions.setUserId({ userId: json.userID }))
+        dispatch(user.actions.setUserId({ userId: json.userId }))
         dispatch(user.actions.setUsername({ username: json.username }))
+        return json
       })
-      .then(() => {
-        const userId = getStore().user.login.userId
+      .then((json) => {
+        console.log('Json again:', json)
+        const userId = /* json.userId */getStore().user.login.userId
+        console.log('UserId:', userId)
         const formData = new FormData()
         formData.append('image', fileInput.current.files[0])
         fetch(`http://localhost:8080/users/${userId}`, {
@@ -99,8 +103,9 @@ export const login = (username, password) => {
       })
       .then((json) => {
         dispatch(user.actions.setAccessToken({ accessToken: json.accessToken }))
-        dispatch(user.actions.setUserId({ userId: json.userID }))
+        dispatch(user.actions.setUserId({ userId: json.userId }))
         dispatch(user.actions.setUsername({ username: json.username }))
+        console.log('User in redux:', user.userId, user.accessToken, user.username)
       })
       .catch((err) => {
         dispatch(user.actions.setErrorMessage({ errorMessage: err.toString() }))
