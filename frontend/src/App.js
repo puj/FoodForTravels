@@ -1,5 +1,4 @@
 import React from 'react'
-import styled from 'styled-components'
 import { Provider } from 'react-redux'
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'

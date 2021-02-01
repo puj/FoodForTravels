@@ -1,5 +1,8 @@
 import React from 'react'
-import styled from 'styled-components'
+import { Link } from 'react-router-dom'
+
+import { Card } from 'components/reusable/Card'
+import { GridFeed } from 'components/reusable/Containers'
 
 export const BlogFeed = () => {
   const blogpostarr = [
@@ -38,47 +41,33 @@ export const BlogFeed = () => {
     },
     {
       title: 'Best food ever',
-      blogtext: 'Pizza. Pasta. Anything with butter and salt.'
+      blogtext: 'Pizza. Pasta. Anything with butter and salt.',
     },
     {
       title: 'Can you eat bugs?',
       blogtext:
-        'Yes. My friend ate a deepfried spider in madagaskar and said it tasted like paté. I wouldnt like to try it though..'
+        'Yes. My friend ate a deepfried spider in madagaskar and said it tasted like paté. I wouldnt like to try it though..',
     },
     {
       title: 'Last title for dummies',
-      blogtext: 'Last dummytext for testing out my layout.'
+      blogtext: 'Last dummytext for testing out my layout.',
     },
   ]
 
-  const Card = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 150px;
-  height: 150px;
-  overflow: hidden;
-  border-radius: 5px;
-  background: #fff;
-  margin: 5px;
-  `
-  const FeedGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: min-content;
-  justify-items: center;
-  width: 100%;
-  margin: 3em 2em 1em 2em;
-  `
-
   return (
-    <FeedGrid>
+    <GridFeed>
       {blogpostarr.map((blogpost) => {
-        return(
-        <Card>
-          <h3>{blogpost.title}</h3>
-          <p>{blogpost.blogtext}</p>
-        </Card>
-      )})}
-    </FeedGrid>
+        return (
+          <Link to={`/blogposts/${blogpost._id}`}>
+            <Card
+              blogfeed
+              gridpost={true}
+              heading={blogpost.title}
+              innertext={blogpost.blogtext}
+            />
+          </Link>
+        )
+      })}
+    </GridFeed>
   )
 }
