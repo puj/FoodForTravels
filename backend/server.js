@@ -97,9 +97,7 @@ const blogpostSchema = mongoose.Schema(
       minlength: 20,
     },
     tags: [
-      {
-        text: { type: String },
-      },
+      String,
     ],
     image: { //Perhaps change this to an array
       imageName: {
@@ -271,7 +269,7 @@ app.get('/blogposts', async (req, res) => {
     const blogpostQuery = BlogPost.find()
     if (tags) {
       const tagArray = tags.split(',')
-      blogpostQuery.where('tags.text').in(tagArray)
+      blogpostQuery.where('tags').in(tagArray)
     }
     blogpostQuery
       .sort({ createdAt: 'desc' })

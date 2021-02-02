@@ -135,14 +135,14 @@ export const logout = () => {
 }
 
  export const createBlogPost = (userid, accesstoken, title, text, tags) => {
- // return (getStore) => {
+    return () => {
     //const author = getStore().user.login.userId
     //const accessToken = getStore().user.login.accessToken
     console.log('Accesstoken:', accesstoken)
     console.log('Userid for fetch:', userid)
     fetch(CREATE_POST_URL(userid), {
       method: 'POST',
-      body: JSON.stringify({  /* author, */  title, text, tags }),
+      body: JSON.stringify({ title, text, tags }),//tags
       headers: {
         'Authorization': accesstoken,
         'Content-Type': 'application/json'
@@ -163,9 +163,9 @@ export const logout = () => {
               })
           }) */
       .then((json) => {
-        console.log(json)
+        console.log('JSON',json)
       })
- // }
+  }
 } 
 
 export const fetchBlogPost = () => {

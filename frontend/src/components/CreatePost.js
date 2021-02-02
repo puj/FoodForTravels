@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/macro'
 import Editext from 'react-editext'
-//import { EditText, EditTextarea } from 'react-edit-text'
-import 'react-edit-text/dist/index.css'
 
 import { createBlogPost } from 'reducers/user'
 
@@ -26,30 +24,39 @@ export const CreatePost = () => {
   const accesstoken = useSelector((store) => store.user.login.accessToken)
   const [title, setTitle] = useState('')
   const [blogText, setBlogText] = useState('')
+  const [tags, setTags] = useState([])
 
   const handleSubmit = (event) => {
     event.preventDefault()
   }
- const sendPost = () => {
-   dispatch(createBlogPost( userid, accesstoken, /* author, */ title, blogText))
+  const sendPost = () => {
+    dispatch(createBlogPost(userid, accesstoken, title, blogText, tags))
+    setTitle('')
+    setBlogText('')
+    setTags([])
   }
-
 
   return (
     <CreatePostWrapper>
       <form onSubmit={handleSubmit}>
         <input
-        type='text'
-        value={title}
-        placeholder='Add title here'
-        onChange={(event) => setTitle(event.target.value)}
+          type='text'
+          value={title}
+          placeholder='Add title here'
+          onChange={(event) => setTitle(event.target.value)}
         />
         <input
-        type='textarea'
-        rows='4'
-        value={blogText}
-        placeholder='Add your blogtext here'
-        onChange={(event) => setBlogText(event.target.value)}
+          type='textarea'
+          rows='4'
+          value={blogText}
+          placeholder='Add your blogtext here'
+          onChange={(event) => setBlogText(event.target.value)}
+        />
+        <input
+          type='text'
+          value={tags}
+          placeholder='Enter your tags'
+          onChange={(event) => setTags([event.target.value])}
         />
         <Button
           buttonText='Add post'
@@ -60,7 +67,8 @@ export const CreatePost = () => {
     </CreatePostWrapper>
   )
 }
-{/* <input
+{
+  /* <input
           type='text'
           placeholder='Add title'
           value={title}
@@ -71,4 +79,5 @@ export const CreatePost = () => {
           placeholder='Add text'
           value={blogText}
           onChange={(event) => setBlogText(event.target.value)}
-        /> */}
+        /> */
+}
