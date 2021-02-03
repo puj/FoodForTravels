@@ -13,6 +13,8 @@ export const Main = styled.main`
   display: grid;
   grid-template-rows: min-content;
   min-height: 100vh;
+  width: 100%;
+  position: absolute;
 `
 
 export const GridFeed = styled.div`
@@ -22,4 +24,12 @@ justify-items: center;
 width: 100%;
 max-height: 50%;
 padding: 3em 2em 1em 2em;
+`
+export const CreatePostWrapper = styled.div`
+display: flex;
+flex-direction: column;
+width: 50%;
+background: #fff;
+padding: 2em;
+position: absolute;
 `

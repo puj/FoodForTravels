@@ -8,6 +8,7 @@ const CardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
   ${({ gridpost }) =>
     gridpost &&
     `
@@ -42,8 +43,8 @@ const ImageWrapper = styled.div`
   height: 15em;
   background: #c9f0a1;
   position: absolute;
-  top: 25%;
-  left: 15%;
+  top: -10%;
+  left: -10%;
 `
 const Image = styled.img`
   border-radius: 50%;
@@ -61,7 +62,9 @@ export const Card = ({
   imageurl,
   blogfeed,
   postimage,
+  username
 }) => {
+  console.log('ImageURL:',imageurl)
   return (
     <CardWrapper gridpost={gridpost}>
       {profile && (
@@ -72,7 +75,7 @@ export const Card = ({
                 ? `${imageurl}`
                 : '../assets/blank-profile-picture-973460_640.png'
             }
-            alt={imageurl ? 'profile image of person' : 'image-avatar'}
+            alt={imageurl ? `profile-image of ${username}` : 'image-avatar'}
           />
         </ImageWrapper>
       )}

@@ -107,11 +107,12 @@ export const login = (username, password) => {
         return res.json()
       })
       .then((json) => {
-        console.log('response json sign in:', json)
+        console.log('Json response:', json)
+        console.log('username in fetch:', json.username, 'imageurl in fetch:', json.profileImage)
         dispatch(user.actions.setAccessToken({ accessToken: json.accessToken }))
         dispatch(user.actions.setUserId({ userId: json.userId }))
         dispatch(user.actions.setUsername({ username: json.username }))
-        dispatch(user.actions.setProfileImage({ profileImage: json.profileImage.imageUrl }))
+        dispatch(user.actions.setProfileImage({ profileImage: json.profileImage }))
         console.log('User in redux:', user.userId, user.accessToken, user.username)
       })
       .catch((err) => {
@@ -136,13 +137,9 @@ export const logout = () => {
 
  export const createBlogPost = (userid, accesstoken, title, text, tags) => {
     return () => {
-    //const author = getStore().user.login.userId
-    //const accessToken = getStore().user.login.accessToken
-    console.log('Accesstoken:', accesstoken)
-    console.log('Userid for fetch:', userid)
     fetch(CREATE_POST_URL(userid), {
       method: 'POST',
-      body: JSON.stringify({ title, text, tags }),//tags
+      body: JSON.stringify({ title, text, tags }),
       headers: {
         'Authorization': accesstoken,
         'Content-Type': 'application/json'

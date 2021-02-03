@@ -73,6 +73,10 @@ const userSchema = mongoose.Schema({
       type: String,
     },
   },
+  description: {
+    type: String,
+    minlength: 2,
+  },
   accessToken: {
     type: String,
     default: () => crypto.randomBytes(128).toString('hex'),
@@ -220,6 +224,34 @@ app.patch('/users/:id', parser.single('image'), async(req, res) => {
       console.log('Userprofile:', userProfile)
   } catch(err) {
     res.status(400).json({ message: 'Sorry, could not post you profileimage. Check your format, only png or jpg is allowed.', error_message: err.message, error: err })
+  }
+})
+//ADD DESCRIPTION TO AUTHORS
+app.patch('/users/:id/description', authenticateUser)
+app.patch('/users/:id/description', async(req, res) => {
+  const { id } = req.params
+  console.log('REQBODY:',req.body)
+  try {
+    const userProfile = await User.findOneAndUpdate(
+      { _id: id },
+      {description: req.body.description},
+      {new: true })
+      res.status(200).json(userProfile)
+      console.log('UserProfile with description:', userProfile)
+  } catch(err) {
+    res.status(400).json({ message: 'Sorry, could not update your profile', error_message: err.message, error: err}  )
+  }
+})
+
+//DELETE USER
+app.delete('/users/:id', authenticateUser)
+app.delete('/users/:id', async(req,res) => {
+  const { id } = req.params
+  try {
+    const userProfile = await User.findByIdAndDelete(id)
+    res.status(200).json({message: 'Successfully deleted your profile', profile_deleted: userProfile})
+  } catch(err) {
+    res.status(400).json({ message: 'Could not delete your profile, try again later', error_message: err.message, error: err} )
   }
 })
 

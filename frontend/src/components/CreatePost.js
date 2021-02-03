@@ -5,17 +5,9 @@ import Editext from 'react-editext'
 
 import { createBlogPost } from 'reducers/user'
 
-/* import { BlogPostInput } from './BlogPostInput' */
-import { Button } from '../components/reusable/Button'
-//import { CREATE_POST_URL } from '../urls'
-
-const CreatePostWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-  background: #fff;
-  padding: 2em;
-`
+import { Button } from './reusable/Button'
+import { StyledForm } from './reusable/FormStyles'
+import { CreatePostWrapper } from './reusable/Containers'
 
 export const CreatePost = () => {
   const dispatch = useDispatch()
@@ -38,7 +30,7 @@ export const CreatePost = () => {
 
   return (
     <CreatePostWrapper>
-      <form onSubmit={handleSubmit}>
+      <StyledForm onSubmit={handleSubmit}>
         <input
           type='text'
           value={title}
@@ -63,7 +55,7 @@ export const CreatePost = () => {
           buttonType='submit'
           onClickFunction={sendPost}
         />
-      </form>
+      </StyledForm>
     </CreatePostWrapper>
   )
 }
