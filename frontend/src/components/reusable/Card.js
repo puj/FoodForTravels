@@ -36,6 +36,13 @@ const CardText = styled.p`
 const InnerCard = styled.div`
   width: 80%;
   height: 70%;
+  ${({ profile }) =>
+    profile &&
+  `
+    background: #fff;
+    display: flex;
+    justify-content: center;
+  `}
 `
 const ImageWrapper = styled.div`
   border-radius: 50%;
@@ -62,9 +69,8 @@ export const Card = ({
   imageurl,
   blogfeed,
   postimage,
-  username
+  username,
 }) => {
-  console.log('ImageURL:',imageurl)
   return (
     <CardWrapper gridpost={gridpost}>
       {profile && (
@@ -85,7 +91,7 @@ export const Card = ({
         </ImageWrapper>
       )}
       <CardHeading>{heading}</CardHeading>
-      <InnerCard>
+      <InnerCard profile={profile}>
         <CardText>{innertext}</CardText>
       </InnerCard>
     </CardWrapper>

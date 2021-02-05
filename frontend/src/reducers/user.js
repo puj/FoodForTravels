@@ -5,6 +5,7 @@ import {
   LOGIN_URL,
   GET_BLOGPOST_URL,
   CREATE_POST_URL,
+  ADD_DESCRIPTION_URL
 } from '../urls'
 
 const initialState = {
@@ -14,7 +15,7 @@ const initialState = {
     accessToken: localStorage.accessToken || null,
     userId: localStorage.userId || 0,
     errorMessage: '',
-    isLoggedIn: false,
+    description: localStorage.description || '',
   },
 }
 
@@ -46,6 +47,13 @@ export const user = createSlice({
       const { profileImage } = action.payload
       state.login.profileImage = profileImage
       localStorage.setItem('imageurl', profileImage) //set this string as a variable to avoid confusion
+    },
+    setDescription: (state, action) => {
+      console.log('Action payload:', action.payload)
+      const { description } = action.payload
+      console.log('Description in setDescription:', description)
+      state.login.description = description
+      localStorage.setItem('description', description)
     }
   },
 })
@@ -113,7 +121,7 @@ export const login = (username, password) => {
         dispatch(user.actions.setUserId({ userId: json.userId }))
         dispatch(user.actions.setUsername({ username: json.username }))
         dispatch(user.actions.setProfileImage({ profileImage: json.profileImage }))
-        console.log('User in redux:', user.userId, user.accessToken, user.username)
+        dispatch(user.actions.setDescription({ description: json.description }))
       })
       .catch((err) => {
         dispatch(user.actions.setErrorMessage({ errorMessage: err.toString() }))
@@ -128,10 +136,37 @@ export const logout = () => {
     dispatch(user.actions.setUserId({ userId: 0 }))
     dispatch(user.actions.setUsername({ username: '' }))
     dispatch(user.actions.setProfileImage({ profileImage: '' }))
-    localStorage.removeItem('accessToken')
+    dispatch(user.actions.setDescription({ description: '' }))
+    localStorage.clear()
+    /* localStorage.removeItem('accessToken')
     localStorage.removeItem('userId')
     localStorage.removeItem('username')
     localStorage.removeItem('imageurl')
+    localStorage.removeItem('description') */ //change to localStorage.clear()
+  }
+}
+
+export const addUserDescription = (userId, accesstoken, userDescription) => {
+  return (dispatch) => {
+    console.log(userDescription, typeof(userDescription))
+    fetch(ADD_DESCRIPTION_URL(userId), {
+      method: 'PATCH',
+      body: JSON.stringify({description: userDescription}),
+      headers: {
+        'Authorization': accesstoken,
+        'Content-Type': 'application/json'
+      },
+    })
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error('Could not create post')
+      }
+      return res.json()
+    })
+    .then(json => {
+      console.log('JSON RESP', json)
+      dispatch(user.actions.setDescription({ description: json.description}))
+      console.log('JSON DESCR:', json.description)})
   }
 }
 
