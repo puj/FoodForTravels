@@ -170,11 +170,11 @@ export const addUserDescription = (userId, accesstoken, userDescription) => {
   }
 }
 
- export const createBlogPost = (userid, accesstoken, title, text, tags) => {
+ export const createBlogPost = (userid, accesstoken, title, blogText, tags) => {
     return () => {
     fetch(CREATE_POST_URL(userid), {
       method: 'POST',
-      body: JSON.stringify({ title, text, tags }),
+      body: JSON.stringify({ title, text: blogText, tags }),
       headers: {
         'Authorization': accesstoken,
         'Content-Type': 'application/json'

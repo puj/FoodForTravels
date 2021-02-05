@@ -34,12 +34,12 @@ export const CreatePost = () => {
         <Editext
           type='text'
           value={!title ? 'Enter title here' : title}
-          onSave={(event) => setTitle(event.target.value)}
+          onSave={(titleInput) => setTitle(titleInput)}
         />
         <Editext
           type='textarea'
           value={!blogText ? 'Start writing you post here' : blogText}
-          onSave={(event) => setBlogText(event.target.value)}
+          onSave={(blogTextInput) => setBlogText(blogTextInput)}
         />
         <Tagdiv>
           Add tags to your post by pressing 'Enter', remove by pressing
