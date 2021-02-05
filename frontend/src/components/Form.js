@@ -1,11 +1,10 @@
 import React, { useRef, useState } from 'react'
-import styled from 'styled-components/macro'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import { login, signUp } from '../reducers/user'
 
-import { Button } from './reusable/Button'
+import { Button } from './lib/Button'
 import {
   StyledForm,
   Label,
@@ -14,7 +13,7 @@ import {
   PlusSign,
   ImageUploadDiv,
   Filename,
-} from './reusable/FormStyles'
+} from './styles/FormStyles'
 
 export const Form = ({ alreadyUser, newUser }) => {
   const dispatch = useDispatch()

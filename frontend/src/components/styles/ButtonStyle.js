@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 
-const StyledButton = styled.button`
+export const StyledButton = styled.button`
   border-radius: 8px;
   background: #d7ecf3;
   color: #353539;
@@ -19,11 +19,3 @@ const StyledButton = styled.button`
   }
   `}
 `
-
-export const Button = ({ logoutbutton, buttonText, buttonType, onClickFunction }) => {
-  return (
-    <StyledButton logoutbutton={logoutbutton} type={buttonType} onClick={onClickFunction}>
-      {buttonText}
-    </StyledButton>
-  )
-}

@@ -4,10 +4,9 @@ import { Link } from 'react-router-dom'
 
 import { logout, user, addUserDescription } from 'reducers/user'
 
-import { CreatePost } from '../components/CreatePost'
-import { Card } from '../components/reusable/Card'
-import { Button } from '../components/reusable/Button'
-import { Wrapper } from '../components/reusable/Containers'
+import { Card } from '../components/lib/Card'
+import { Button } from '../components/lib/Button'
+import { Wrapper } from '../components/styles/Containers'
 
 export const Profile = () => {
   const username = useSelector((store) => store.user.login.username)
@@ -60,8 +59,6 @@ export const Profile = () => {
             </>
           ):description}
         />
-        {/* <CreatePost /> */}
-        {/* {console.log('Userdescription in usestate:',description)}description? description : 'Add a description to your profile' */}
         <Link to='/'>
           <Button
             logoutbutton={true}

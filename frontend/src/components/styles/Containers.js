@@ -33,3 +33,6 @@ background: #fff;
 padding: 2em;
 position: absolute;
 `
+export const Tagdiv = styled.div`
+margin: 1em;
+`

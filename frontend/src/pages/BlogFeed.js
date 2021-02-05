@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import { Card } from 'components/reusable/Card'
-import { GridFeed } from 'components/reusable/Containers'
+import { Card } from 'components/lib/Card'
+import { GridFeed } from 'components/styles/Containers'
 
 export const BlogFeed = () => {
   const blogpostarr = [
