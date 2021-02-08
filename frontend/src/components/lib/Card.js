@@ -56,8 +56,8 @@ export const Card = ({
             <Button buttonText='Create a new blogpost' />
           </Link>
         )}
-        {createpostpage && <CreatePost />}
       </InnerCard>
+      {createpostpage && <CreatePost />}
     </CardWrapper>
   )
 }

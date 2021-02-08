@@ -2,7 +2,7 @@ import styled from 'styled-components/macro'
 
 export const CardWrapper = styled.div`
   width: 100%;
-  height: 30em;
+  height: 25em;
   background: #353539;
   display: flex;
   flex-direction: column;
@@ -11,6 +11,8 @@ export const CardWrapper = styled.div`
   
   @media(min-width: 1024px) {
     max-width: 40em;
+    justify-content: center;
+    min-height: 100%;
   }
   ${({ gridpost }) =>
     gridpost &&
@@ -23,6 +25,9 @@ export const CardWrapper = styled.div`
         padding: 0.3em;
         &:hover {
             background: #d3f3b3;
+        }
+        @media (min-width: 1024px) {
+          max-width: 10em;
         }
     `}
 `

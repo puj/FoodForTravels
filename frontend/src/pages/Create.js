@@ -25,7 +25,7 @@ export const Create = () => {
   } else {
     return (
       <Wrapper>
-          <h1>Okay {username}, let's start blogging!</h1>
+          <h3>Okay {username}, let's start blogging!</h3>
         <Card createpostpage />
         <Link to='/'>
           <Button

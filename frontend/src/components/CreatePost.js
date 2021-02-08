@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Editext from 'react-editext'
-import TagsInput from 'react-tagsinput'
 
 import { createBlogPost } from 'reducers/user'
 
 import { Button } from './lib/Button'
 import { StyledForm } from './styles/FormStyles'
-import { CreatePostWrapper, Tagdiv } from './styles/Containers'
+import { CreatePostWrapper, StyledEdiText, Tagdiv, StyledTagsInput } from './styles/Containers'
 
 export const CreatePost = () => {
   const dispatch = useDispatch()
@@ -31,12 +29,12 @@ export const CreatePost = () => {
   return (
     <CreatePostWrapper>
       <StyledForm onSubmit={handleSubmit}>
-        <Editext
+        <StyledEdiText
           type='text'
           value={!title ? 'Enter title here' : title}
           onSave={(titleInput) => setTitle(titleInput)}
         />
-        <Editext
+        <StyledEdiText
           type='textarea'
           value={!blogText ? 'Start writing you post here' : blogText}
           onSave={(blogTextInput) => setBlogText(blogTextInput)}
@@ -44,7 +42,7 @@ export const CreatePost = () => {
         <Tagdiv>
           Add tags to your post by pressing 'Enter', remove by pressing
           'Backspace'
-          <TagsInput
+          <StyledTagsInput
             inputValue={tag}
             onChangeInput={(inputTag) => setTag(inputTag)}
             value={tags}
