@@ -5,7 +5,7 @@ import {
   LOGIN_URL,
   GET_BLOGPOST_URL,
   CREATE_POST_URL,
-  ADD_DESCRIPTION_URL
+  ADD_DESCRIPTION_URL,
 } from '../urls'
 
 const initialState = {
@@ -54,10 +54,9 @@ export const user = createSlice({
       console.log('Description in setDescription:', description)
       state.login.description = description
       localStorage.setItem('description', description)
-    }
+    },
   },
 })
-
 
 //THUNKS
 export const signUp = (username, email, password, fileInput) => {
@@ -89,9 +88,15 @@ export const signUp = (username, email, password, fileInput) => {
         fetch(`http://localhost:8080/users/${userId}`, {
           method: 'PATCH',
           body: formData,
-        }).then((res) => res.json()).then(json => {
-          dispatch(user.actions.setProfileImage({ profileImage: json.profileImage.imageUrl}))
         })
+          .then((res) => res.json())
+          .then((json) => {
+            dispatch(
+              user.actions.setProfileImage({
+                profileImage: json.profileImage.imageUrl,
+              })
+            )
+          })
       })
       .catch((err) => {
         dispatch(user.actions.setErrorMessage({ errorMessage: err.toString() }))
@@ -116,11 +121,18 @@ export const login = (username, password) => {
       })
       .then((json) => {
         console.log('Json response:', json)
-        console.log('username in fetch:', json.username, 'imageurl in fetch:', json.profileImage)
+        console.log(
+          'username in fetch:',
+          json.username,
+          'imageurl in fetch:',
+          json.profileImage
+        )
         dispatch(user.actions.setAccessToken({ accessToken: json.accessToken }))
         dispatch(user.actions.setUserId({ userId: json.userId }))
         dispatch(user.actions.setUsername({ username: json.username }))
-        dispatch(user.actions.setProfileImage({ profileImage: json.profileImage }))
+        dispatch(
+          user.actions.setProfileImage({ profileImage: json.profileImage })
+        )
         dispatch(user.actions.setDescription({ description: json.description }))
       })
       .catch((err) => {
@@ -138,46 +150,42 @@ export const logout = () => {
     dispatch(user.actions.setProfileImage({ profileImage: '' }))
     dispatch(user.actions.setDescription({ description: '' }))
     localStorage.clear()
-    /* localStorage.removeItem('accessToken')
-    localStorage.removeItem('userId')
-    localStorage.removeItem('username')
-    localStorage.removeItem('imageurl')
-    localStorage.removeItem('description') */ //change to localStorage.clear()
   }
 }
 
 export const addUserDescription = (userId, accesstoken, userDescription) => {
   return (dispatch) => {
-    console.log(userDescription, typeof(userDescription))
+    console.log(userDescription, typeof userDescription)
     fetch(ADD_DESCRIPTION_URL(userId), {
       method: 'PATCH',
-      body: JSON.stringify({description: userDescription}),
+      body: JSON.stringify({ description: userDescription }),
       headers: {
-        'Authorization': accesstoken,
-        'Content-Type': 'application/json'
+        Authorization: accesstoken,
+        'Content-Type': 'application/json',
       },
     })
-    .then((res) => {
-      if (!res.ok) {
-        throw new Error('Could not create post')
-      }
-      return res.json()
-    })
-    .then(json => {
-      console.log('JSON RESP', json)
-      dispatch(user.actions.setDescription({ description: json.description}))
-      console.log('JSON DESCR:', json.description)})
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Could not create post')
+        }
+        return res.json()
+      })
+      .then((json) => {
+        console.log('JSON RESP', json)
+        dispatch(user.actions.setDescription({ description: json.description }))
+        console.log('JSON DESCR:', json.description)
+      })
   }
 }
 
- export const createBlogPost = (userid, accesstoken, title, blogText, tags) => {
-    return () => {
+export const createBlogPost = (userid, accesstoken, title, blogText, tags) => {
+  return () => {
     fetch(CREATE_POST_URL(userid), {
       method: 'POST',
       body: JSON.stringify({ title, text: blogText, tags }),
       headers: {
-        'Authorization': accesstoken,
-        'Content-Type': 'application/json'
+        Authorization: accesstoken,
+        'Content-Type': 'application/json',
       },
     })
       .then((res) => {
@@ -195,12 +203,12 @@ export const addUserDescription = (userId, accesstoken, userDescription) => {
               })
           }) */
       .then((json) => {
-        console.log('JSON',json)
+        console.log('JSON', json)
       })
   }
-} 
+}
 
-export const fetchBlogPost = () => {
+export const fetchBlogPosts = (callback) => {
   fetch(GET_BLOGPOST_URL, {
     method: 'GET',
   })
@@ -211,7 +219,7 @@ export const fetchBlogPost = () => {
       return res.json()
     })
     .then((json) => {
-      console.log(json)
+      callback(json)
     })
     .catch((err) => {
       console.log('Error:', err)

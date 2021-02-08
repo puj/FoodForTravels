@@ -2,7 +2,6 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { BlogFeed } from './BlogFeed'
 import { Searchbar } from '../components/Searchbar'
 import { Wrapper } from '../components/styles/Containers'
 import { Button } from 'components/lib/Button'
@@ -22,8 +21,11 @@ export const StartPage = () => {
     return(
     <>
       <Wrapper>
-        <Searchbar />
-        <BlogFeed/>
+      <Searchbar />
+        <Link to='/blogfeed'>
+        <Button logoutbutton={true}
+        buttonText='Show blogposts'/>
+        </Link>
       </Wrapper>
     </>
   )} else {

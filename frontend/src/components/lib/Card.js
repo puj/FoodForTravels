@@ -10,7 +10,7 @@ import {
   ImageWrapper,
   Image,
 } from '../styles/CardStyle'
-import { CreatePost } from 'components/CreatePost'
+import {CreatePost} from '../CreatePost'
 
 export const Card = ({
   gridpost,
@@ -46,7 +46,7 @@ export const Card = ({
       <InnerCard profile={profile}>
         <CardText>{innertext}</CardText>
         {profile && (
-          <Link to='/CreatePost'>
+          <Link to='/createPost'>
             <Button buttonText='Create a new blogpost'/>
           </Link>
         )}

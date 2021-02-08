@@ -144,6 +144,7 @@ const User = mongoose.model('User', userSchema)
 
 const BlogPost = mongoose.model('BlogPost', blogpostSchema)
 
+//AUTHENTICATIONFUNCTION
 const authenticateUser = async (req, res, next) => {
   const user = await User.findOne({ accessToken: req.header('Authorization') })
   if (user) {
@@ -226,6 +227,7 @@ app.patch('/users/:id', parser.single('image'), async(req, res) => {
     res.status(400).json({ message: 'Sorry, could not post you profileimage. Check your format, only png or jpg is allowed.', error_message: err.message, error: err })
   }
 })
+
 //ADD DESCRIPTION TO AUTHORS
 app.patch('/users/:id/description', authenticateUser)
 app.patch('/users/:id/description', async(req, res) => {
@@ -321,7 +323,8 @@ app.get('/blogposts', async (req, res) => {
 
 app.get('/blogposts/:id', async (req, res) => {
   try {
-    const blogpost = await BlogPost.findOne(req.params._id)
+    const { id } = req.params
+    const blogpost = await BlogPost.findOne({_id: id})
     res.status(200).json(blogpost)
   } catch (err) {
     res.status(404).status({
