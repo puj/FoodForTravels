@@ -31,18 +31,28 @@ export const CardText = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  ${({ blogPost }) =>
+  blogPost &&
+    `
+    white-space: pre-wrap;
+  `}
 `
 export const InnerCard = styled.div`
   width: 80%;
   height: 70%;
-  ${({ profile }) =>
-    profile &&
-  `
+  ${({ whiteBackground }) =>
+    whiteBackground &&
+    `
     background: #fff;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+  `}
+  ${({ blogPost }) =>
+  blogPost &&
+    `
+    height: 100%;
   `}
 `
 export const ImageWrapper = styled.div`

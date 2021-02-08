@@ -10,7 +10,7 @@ import {
   ImageWrapper,
   Image,
 } from '../styles/CardStyle'
-import {CreatePost} from '../CreatePost'
+import { CreatePost } from '../CreatePost'
 
 export const Card = ({
   gridpost,
@@ -18,10 +18,11 @@ export const Card = ({
   innertext,
   profile,
   imageurl,
-  blogfeed,
   postimage,
   username,
-  createpostpage
+  createpostpage,
+  whiteBackground,
+  blogPost
 }) => {
   return (
     <CardWrapper gridpost={gridpost}>
@@ -37,22 +38,20 @@ export const Card = ({
           />
         </ImageWrapper>
       )}
-      {blogfeed && postimage && (
+      {postimage && (
         <ImageWrapper>
           <Image src={imageurl} />
         </ImageWrapper>
       )}
       <CardHeading>{heading}</CardHeading>
-      <InnerCard profile={profile}>
-        <CardText>{innertext}</CardText>
+      <InnerCard whiteBackground={whiteBackground}>
+        <CardText blogPost={blogPost}>{innertext}</CardText>
         {profile && (
           <Link to='/createPost'>
-            <Button buttonText='Create a new blogpost'/>
+            <Button buttonText='Create a new blogpost' />
           </Link>
         )}
-        {createpostpage && (
-          <CreatePost/>
-        )}
+        {createpostpage && <CreatePost />}
       </InnerCard>
     </CardWrapper>
   )

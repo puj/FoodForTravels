@@ -3,7 +3,6 @@ import { createSlice } from '@reduxjs/toolkit'
 import {
   SIGN_UP_URL,
   LOGIN_URL,
-  GET_BLOGPOST_URL,
   CREATE_POST_URL,
   ADD_DESCRIPTION_URL,
 } from '../urls'
@@ -206,22 +205,4 @@ export const createBlogPost = (userid, accesstoken, title, blogText, tags) => {
         console.log('JSON', json)
       })
   }
-}
-
-export const fetchBlogPosts = (callback) => {
-  fetch(GET_BLOGPOST_URL, {
-    method: 'GET',
-  })
-    .then((res) => {
-      if (!res.ok) {
-        throw new Error('Could not get any posts')
-      }
-      return res.json()
-    })
-    .then((json) => {
-      callback(json)
-    })
-    .catch((err) => {
-      console.log('Error:', err)
-    })
 }
