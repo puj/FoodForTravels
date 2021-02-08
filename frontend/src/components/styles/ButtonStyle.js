@@ -18,4 +18,13 @@ export const StyledButton = styled.button`
     transform: scale(1.1);
   }
   `}
+  ${({ backbutton }) =>
+    backbutton &&
+    `
+    background: #353539;
+    font-size: 1.6em;
+    color: #d7ecf3;
+    margin: 0.6em;
+    align-self: baseline;
+  `}
 `

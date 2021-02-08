@@ -39,6 +39,8 @@ export const Profile = () => {
         <h1>{`Hello ${username}!`}</h1>
         <Card
           profile
+          blogPost={true}
+          description={true}
           whiteBackground
           imageurl={imageurl}
           username={username}

@@ -1,9 +1,9 @@
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 
 export const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   min-width: 50%;
   min-height: 50%;

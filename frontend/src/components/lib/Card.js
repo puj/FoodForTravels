@@ -22,7 +22,8 @@ export const Card = ({
   username,
   createpostpage,
   whiteBackground,
-  blogPost
+  blogPost,
+  description,
 }) => {
   return (
     <CardWrapper gridpost={gridpost}>
@@ -44,7 +45,11 @@ export const Card = ({
         </ImageWrapper>
       )}
       <CardHeading>{heading}</CardHeading>
-      <InnerCard whiteBackground={whiteBackground}>
+      <InnerCard
+        description={description}
+        blogPost={blogPost}
+        whiteBackground={whiteBackground}
+      >
         <CardText blogPost={blogPost}>{innertext}</CardText>
         {profile && (
           <Link to='/createPost'>

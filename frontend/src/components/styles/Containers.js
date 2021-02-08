@@ -19,11 +19,17 @@ export const Main = styled.main`
 
 export const GridFeed = styled.div`
 display: grid;
-grid-template-columns: repeat(4, 1fr);
 justify-items: center;
 width: 100%;
 max-height: 50%;
 padding: 3em 2em 1em 2em;
+
+@media (min-width: 768px) {
+  grid-template-columns: 1fr 1fr;
+}
+@media (min-width: 1024px) {
+  grid-template-columns: repeat(4, 1fr);
+}
 `
 export const CreatePostWrapper = styled.div`
 display: flex;

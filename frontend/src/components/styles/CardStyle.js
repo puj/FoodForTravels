@@ -1,13 +1,17 @@
 import styled from 'styled-components/macro'
 
 export const CardWrapper = styled.div`
-  width: 40em;
+  width: 100%;
   height: 30em;
   background: #353539;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
+  
+  @media(min-width: 1024px) {
+    max-width: 40em;
+  }
   ${({ gridpost }) =>
     gridpost &&
     `
@@ -32,7 +36,7 @@ export const CardText = styled.p`
   overflow: hidden;
   text-overflow: ellipsis;
   ${({ blogPost }) =>
-  blogPost &&
+    blogPost &&
     `
     white-space: pre-wrap;
   `}
@@ -50,19 +54,31 @@ export const InnerCard = styled.div`
     align-items: center;
   `}
   ${({ blogPost }) =>
-  blogPost &&
+    blogPost &&
     `
-    height: 100%;
+    justify-content: end;
+  `}
+  ${({ description }) =>
+    description &&
+    `
+    justify-content: center;
+    padding: 1em;
   `}
 `
 export const ImageWrapper = styled.div`
   border-radius: 50%;
-  width: 15em;
-  height: 15em;
+  width: 10em;
+  height: 10em;
   background: #c9f0a1;
   position: absolute;
-  top: -10%;
+  top: -7%;
   left: -10%;
+
+  @media (min-width: 768px) {
+    width: 15em;
+    height: 15em;
+    top: -10%;
+  }
 `
 export const Image = styled.img`
   border-radius: 50%;

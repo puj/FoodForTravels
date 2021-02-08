@@ -45,8 +45,11 @@ export const Header = () => {
     display: flex;
     justify-content: space-between;
     position: absolute;
-    right: 0;
     top: 0;
+
+    @media (min-width: 768px) {
+      right: 0;
+    }
   `
 
   const LinkText = styled.p`
