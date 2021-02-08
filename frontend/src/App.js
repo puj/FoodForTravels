@@ -8,7 +8,7 @@ import { StartPage } from './pages/StartPage'
 import { SignUp } from './pages/SignUp'
 import { LogIn } from './pages/LogIn'
 import { Profile } from './pages/Profile'
-import {Create } from './pages/Create'
+import { Create } from './pages/Create'
 import { BlogFeed } from './pages/BlogFeed'
 import { BlogPost } from './pages/BlogPost'
 import { Header } from './components/Header'
@@ -21,9 +21,9 @@ const store = configureStore({ reducer })
 export const App = () => {
   return (
     <Provider store={store}>
-      <Main>
-        <Router>
-          <Header />
+      <Router>
+        <Header />
+        <Main>
           <Switch>
             <Route path='/' exact component={StartPage} />
             <Route path='/signup' exact component={SignUp} />
@@ -33,9 +33,9 @@ export const App = () => {
             <Route path='/blogfeed' exact component={BlogFeed} />
             <Route path='/blogposts/:blogpostid' exact component={BlogPost} />
           </Switch>
-          <Footer />
-        </Router>
-      </Main>
+        </Main>
+        <Footer />
+      </Router>
     </Provider>
   )
 }
