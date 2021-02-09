@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { logout, user, addUserDescription } from 'reducers/user'
+import { logout, addUserDescription } from 'reducers/user'
 
 import { Card } from '../components/lib/Card'
 import { Button } from '../components/lib/Button'

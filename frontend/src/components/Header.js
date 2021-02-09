@@ -1,11 +1,14 @@
 import React from 'react'
 import styled from 'styled-components/macro'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { useSelector } from 'react-redux'
+import { logout } from 'reducers/user'
+import { Button } from './lib/Button'
 
 export const Header = () => {
   const accesstoken = useSelector((store) => store.user.login.accessToken)
+  const dispatch = useDispatch()
 
   const StyledHeader = styled.header`
     background: #353539;
@@ -56,21 +59,42 @@ export const Header = () => {
     color: #fff;
     margin: 5px;
     &:hover {
-        transform: scale(1.1);
+      transform: scale(1.1);
     }
   `
+
+  const handleLogout = () => {
+    dispatch(logout())
+  }
 
   return (
     <StyledHeader>
       <Title>FOOD FOR TRAVELS</Title>
       <SubTitle>The ultimate guide to food on you vacation</SubTitle>
       {accesstoken ? (
-        <Link to='/'>Home</Link>
+        <Links>
+          <Link to='/'>
+            <LinkText>Home</LinkText>
+          </Link>
+          <Link to='/'>
+            <Button
+              buttonText='Log out'
+              onClickFunction={handleLogout}
+              logoutbutton={true}
+            />
+          </Link>
+        </Links>
       ) : (
         <Links>
-          <Link to='/'><LinkText>Home</LinkText></Link>
-          <Link to='/signup'><LinkText>Sign Up</LinkText></Link>
-          <Link to='/login'><LinkText>Log in</LinkText></Link>
+          <Link to='/'>
+            <LinkText>Home</LinkText>
+          </Link>
+          <Link to='/signup'>
+            <LinkText>Sign Up</LinkText>
+          </Link>
+          <Link to='/login'>
+            <LinkText>Log in</LinkText>
+          </Link>
         </Links>
       )}
     </StyledHeader>

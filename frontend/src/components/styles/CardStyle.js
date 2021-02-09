@@ -61,6 +61,10 @@ export const InnerCard = styled.div`
     previewCard &&
     `
     background: #fff;
+    max-height: 9em;
+    @media(min-width: 768px){
+      max-height: 70%;
+    }
   `}
   ${({ blogPost }) =>
     blogPost &&
@@ -98,6 +102,8 @@ export const ImageWrapper = styled.div`
 export const Image = styled.img`
   border-radius: 50%;
   width: 70%;
+  height: 70%;
+  object-fit: cover;
   position: absolute;
   top: 15%;
   left: 15%;
