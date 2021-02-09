@@ -8,7 +8,8 @@ import 'slick-carousel/slick/slick-theme.css'
 import { GET_BLOGPOST_URL } from '../urls'
 
 import { Card } from 'components/lib/Card'
-import { GridFeed, Wrapper, Test } from 'components/styles/Containers'
+import { Button } from 'components/lib/Button'
+import { Wrapper } from 'components/styles/Containers'
 
 export const BlogFeed = () => {
   const [blogposts, setBlogposts] = useState([])
@@ -38,52 +39,65 @@ export const BlogFeed = () => {
     slidesToShow: 3,
     slidesToScroll: 2,
     arrow: true,
-    centerMode: true,
-    variableWidth: true,
+    responsive: [
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+    ],
   }
 
   const StyledSlider = styled(Slider)`
-    slick-prev:before {
+    width: 100%;
+    display: flex;
+    .slick-slide > div {
+      margin: 1em;
+    }
+    .slick-prev:before {
       color: rgba(25, 25, 25, 0.9);
     }
     .slick-next:before {
       color: rgba(25, 25, 25, 0.9);
-    }
-    .slick-arrow {
-      margin: 60px 118px;
-      z-index: 1;
     }
     .slick-dots li button:before {
       color: rgba(25, 25, 25, 0.9);
       font-size: 10px;
       margin: 20px 0;
     }
-    .slick-slide {
-      width: 70em;
-      box-sizing: border-box;
+
+    @media (min-width: 768px) {
     }
   `
 
   return (
-    //<GridFeed>
     <Wrapper>
-        <StyledSlider {...settings}>
-          {blogposts.map((blogpost) => {
-            return (
-              <div key={blogpost._id}>
-                <Link to={`/blogposts/${blogpost._id}`}>
-                  <Card
-                    blogfeed
-                    gridpost={true}
-                    heading={blogpost.title}
-                    innertext={blogpost.text}
-                  />
-                </Link>
-              </div>
-            )
-          })}
-        </StyledSlider>
+      <Link to='/'>
+        <Button backbutton={true} buttonText='Back' />
+      </Link>
+      <StyledSlider {...settings}>
+        {blogposts.map((blogpost) => {
+          return (
+            <Link to={`/blogposts/${blogpost._id}`}>
+              <Card
+                blogfeed={true}
+                previewCard={true}
+                key={blogpost._id}
+                heading={blogpost.title}
+                innertext={blogpost.text}
+              ></Card>
+            </Link>
+          )
+        })}
+      </StyledSlider>
     </Wrapper>
-    //</GridFeed>
   )
 }

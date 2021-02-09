@@ -9,42 +9,22 @@ export const Wrapper = styled.div`
   flex-direction: column;
   padding: 2em 2em 6em 2em;
   background: #d7ecf3;
-  height: 70vh;
   min-width: 100vw;
-`
 
-export const Test = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2em 2em 6em 2em;
-  background: #d7ecf3;
-  height: 70vh;
+  @media(min-width: 768px) {
+    height: 70vh;
+  }
 `
 
 export const Main = styled.main`
   display: grid;
   grid-template-rows: min-content;
-  /* min-height: 100vh;
-  width: 100%; */
   position: absolute;
   overflow: hidden;
+  min-height: 100vh;
+  background: #d7ecf3;
 `
 
-export const GridFeed = styled.div`
-  display: grid;
-  justify-items: center;
-  width: 100%;
-  max-height: 50%;
-  padding: 3em 2em 1em 2em;
-
-  @media (min-width: 768px) {
-    grid-template-columns: 1fr 1fr;
-  }
-  @media (min-width: 1024px) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-`
 export const CreatePostWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -65,7 +45,7 @@ export const Tagdiv = styled.div`
 
 export const StyledTagsInput = styled(TagsInput)`
   span[tagsinput='react-tagsinput-tag'] {
-    background: blue;
+    background: !blue;
   }
 `
 

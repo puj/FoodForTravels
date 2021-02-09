@@ -8,28 +8,22 @@ export const CardWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   position: relative;
-  
-  @media(min-width: 1024px) {
+
+  @media (min-width: 1024px) {
     max-width: 40em;
     justify-content: center;
     min-height: 100%;
   }
-  ${({ gridpost }) =>
-    gridpost &&
+  ${({ blogfeed }) =>
+    blogfeed &&
     `
-        background: #C9F0A1;
-        max-width: 15em;
-        max-height: 7em;
-        align-items: center;
-        margin: 1em 0.3em;
-        padding: 0.3em;
-        &:hover {
-            background: #d3f3b3;
-        }
-        @media (min-width: 1024px) {
-          max-width: 10em;
-        }
-    `}
+    text-align: center;
+    height: 15em;
+
+    @media(min-width: 768px) {
+      height: 25em;
+    }
+  `}
 `
 export const CardHeading = styled.h2`
   color: #fff;
@@ -42,6 +36,11 @@ export const CardText = styled.p`
   text-overflow: ellipsis;
   ${({ blogPost }) =>
     blogPost &&
+    `
+    white-space: pre-wrap;
+  `}
+  ${({ previewCard }) =>
+    previewCard &&
     `
     white-space: pre-wrap;
   `}
@@ -58,6 +57,11 @@ export const InnerCard = styled.div`
     justify-content: center;
     align-items: center;
   `}
+  ${({ previewCard }) =>
+    previewCard &&
+    `
+    background: #fff;
+  `}
   ${({ blogPost }) =>
     blogPost &&
     `
@@ -72,16 +76,22 @@ export const InnerCard = styled.div`
 `
 export const ImageWrapper = styled.div`
   border-radius: 50%;
-  width: 10em;
-  height: 10em;
+  width: 7em;
+  height: 7em;
   background: #c9f0a1;
   position: absolute;
   top: -7%;
   left: -10%;
 
   @media (min-width: 768px) {
-    width: 15em;
-    height: 15em;
+    width: 12em;
+    height: 12em;
+    top: -15%;
+    left: -4%;
+  }
+  @media (min-width: 1024px) {
+    width: 13em;
+    height: 13em;
     top: -10%;
   }
 `

@@ -22,8 +22,8 @@ export const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        <Header />
         <Main>
+          <Header />
           <Switch>
             <Route path='/' exact component={StartPage} />
             <Route path='/signup' exact component={SignUp} />
@@ -33,8 +33,8 @@ export const App = () => {
             <Route path='/blogfeed' exact component={BlogFeed} />
             <Route path='/blogposts/:blogpostid' exact component={BlogPost} />
           </Switch>
+          <Footer />
         </Main>
-        <Footer />
       </Router>
     </Provider>
   )

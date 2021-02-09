@@ -13,7 +13,7 @@ import {
 import { CreatePost } from '../CreatePost'
 
 export const Card = ({
-  gridpost,
+  blogfeed,
   heading,
   innertext,
   profile,
@@ -24,9 +24,10 @@ export const Card = ({
   whiteBackground,
   blogPost,
   description,
+  previewCard
 }) => {
   return (
-    <CardWrapper gridpost={gridpost}>
+    <CardWrapper blogfeed={blogfeed}>
       {profile && (
         <ImageWrapper>
           <Image
@@ -49,8 +50,9 @@ export const Card = ({
         description={description}
         blogPost={blogPost}
         whiteBackground={whiteBackground}
+        previewCard={previewCard}
       >
-        <CardText blogPost={blogPost}>{innertext}</CardText>
+        <CardText previewCard={previewCard} blogPost={blogPost}>{innertext}</CardText>
         {profile && (
           <Link to='/createPost'>
             <Button buttonText='Create a new blogpost' />
