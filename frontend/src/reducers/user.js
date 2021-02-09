@@ -42,15 +42,12 @@ export const user = createSlice({
       localStorage.setItem('username', username)
     },
     setProfileImage: (state, action) => {
-      console.log('Action payload:', action.payload)
       const { profileImage } = action.payload
       state.login.profileImage = profileImage
       localStorage.setItem('imageurl', profileImage) //set this string as a variable to avoid confusion
     },
     setDescription: (state, action) => {
-      console.log('Action payload:', action.payload)
       const { description } = action.payload
-      console.log('Description in setDescription:', description)
       state.login.description = description
       localStorage.setItem('description', description)
     },
@@ -72,16 +69,13 @@ export const signUp = (username, email, password, fileInput) => {
         return res.json()
       })
       .then((json) => {
-        console.log('Json:', json)
         dispatch(user.actions.setAccessToken({ accessToken: json.accessToken }))
         dispatch(user.actions.setUserId({ userId: json.userId }))
         dispatch(user.actions.setUsername({ username: json.username }))
         return json
       })
       .then((json) => {
-        console.log('Json again:', json)
         const userId = getStore().user.login.userId
-        console.log('UserId:', userId)
         const formData = new FormData()
         formData.append('image', fileInput.current.files[0])
         fetch(`http://localhost:8080/users/${userId}`, {
@@ -119,13 +113,6 @@ export const login = (username, password) => {
         return res.json()
       })
       .then((json) => {
-        console.log('Json response:', json)
-        console.log(
-          'username in fetch:',
-          json.username,
-          'imageurl in fetch:',
-          json.profileImage
-        )
         dispatch(user.actions.setAccessToken({ accessToken: json.accessToken }))
         dispatch(user.actions.setUserId({ userId: json.userId }))
         dispatch(user.actions.setUsername({ username: json.username }))
@@ -154,7 +141,6 @@ export const logout = () => {
 
 export const addUserDescription = (userId, accesstoken, userDescription) => {
   return (dispatch) => {
-    console.log(userDescription, typeof userDescription)
     fetch(ADD_DESCRIPTION_URL(userId), {
       method: 'PATCH',
       body: JSON.stringify({ description: userDescription }),
@@ -170,9 +156,7 @@ export const addUserDescription = (userId, accesstoken, userDescription) => {
         return res.json()
       })
       .then((json) => {
-        console.log('JSON RESP', json)
         dispatch(user.actions.setDescription({ description: json.description }))
-        console.log('JSON DESCR:', json.description)
       })
   }
 }
@@ -201,8 +185,5 @@ export const createBlogPost = (userid, accesstoken, title, blogText, tags) => {
                   body: formData
               })
           }) */
-      .then((json) => {
-        console.log('JSON', json)
-      })
   }
 }

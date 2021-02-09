@@ -30,7 +30,6 @@ export const Form = ({ alreadyUser, newUser }) => {
   }
 
   const handleSignUp = () => {
-    console.log('file:', fileInput)
     dispatch(signUp(username, email, password, fileInput))
   }
 
@@ -60,7 +59,6 @@ export const Form = ({ alreadyUser, newUser }) => {
               onChange={(event) => setPassword(event.target.value)}
             />
           </Label>
-          {/* How can I make sure that this link only works if the is an accesstoken?*/}
           <Link to={accesstoken ? '/' : '/login'}>
             <Button
               buttonType='submit'

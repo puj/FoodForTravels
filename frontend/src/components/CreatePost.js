@@ -59,17 +59,3 @@ export const CreatePost = () => {
     </CreatePostWrapper>
   )
 }
-{
-  /* <input
-          type='text'
-          placeholder='Add title'
-          value={title}
-          onChange={(event) => setTitle(event.target.value)}
-        />
-        <input
-          type='text'
-          placeholder='Add text'
-          value={blogText}
-          onChange={(event) => setBlogText(event.target.value)}
-        /> */
-}

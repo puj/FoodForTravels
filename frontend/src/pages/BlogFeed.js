@@ -1,35 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/macro'
 import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
-import { GET_BLOGPOST_URL } from '../urls'
-
+import { getPosts } from '../reducers/blogposts'
 import { Card } from 'components/lib/Card'
 import { Button } from 'components/lib/Button'
 import { Wrapper } from 'components/styles/Containers'
 
 export const BlogFeed = () => {
-  const [blogposts, setBlogposts] = useState([])
+  //const [blogpostArray, setBlogpostArray] = useState([])
+  const [tags, setTags] = useState([])
+  const blogpostArray = useSelector((store) => store.blogposts.posts)
+  const dispatch = useDispatch()
+
+  console.log('Array in blogfeed:', blogpostArray)
 
   useEffect(() => {
-    fetch(GET_BLOGPOST_URL, {
-      method: 'GET',
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error('Could not get any posts')
-        }
-        return res.json()
-      })
-      .then((json) => {
-        setBlogposts(json)
-      })
-      .catch((err) => {
-        console.log('Error:', err)
-      })
+    dispatch(getPosts(tags))
   }, [])
 
   const settings = {
@@ -84,17 +75,18 @@ export const BlogFeed = () => {
         <Button backbutton={true} buttonText='Back' />
       </Link>
       <StyledSlider {...settings}>
-        {blogposts.map((blogpost) => {
+        {blogpostArray.map((blogpost) => {
           return (
-            <Link to={`/blogposts/${blogpost._id}`}>
-              <Card
-                blogfeed={true}
-                previewCard={true}
-                key={blogpost._id}
-                heading={blogpost.title}
-                innertext={blogpost.text}
-              ></Card>
-            </Link>
+            <div key={blogpost._id}>
+              <Link to={`/blogposts/${blogpost._id}`}>
+                <Card
+                  blogfeed={true}
+                  previewCard={true}
+                  heading={blogpost.title}
+                  innertext={blogpost.text}
+                ></Card>
+              </Link>
+            </div>
           )
         })}
       </StyledSlider>

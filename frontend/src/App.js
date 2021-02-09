@@ -14,18 +14,21 @@ import { BlogPost } from './pages/BlogPost'
 import { Header } from './components/Header'
 import { Footer } from './components/Footer'
 import { Main } from './components/styles/Containers'
+import { blogposts } from 'reducers/blogposts'
 
-const reducer = combineReducers({ user: user.reducer })
+const reducer = combineReducers({ user: user.reducer, blogposts: blogposts.reducer })
 const store = configureStore({ reducer })
 
 export const App = () => {
+  //const [tags, setTags] = useState([])
+
   return (
     <Provider store={store}>
       <Router>
         <Main>
           <Header />
           <Switch>
-            <Route path='/' exact component={StartPage} />
+            <Route path='/' exact component={StartPage}/>
             <Route path='/signup' exact component={SignUp} />
             <Route path='/login' exact component={LogIn} />
             <Route path='/profile' exact component={Profile} />

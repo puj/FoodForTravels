@@ -177,8 +177,6 @@ app.post('/users', async (req, res) => {
       password,
       email,
     }).save()
-    console.log('UserID:', user._id)
-    console.log('Accesstoken:', user.accessToken)
     res.status(201).json({ userId: user._id, accessToken: user.accessToken, username: user.username, profileImage: user.profileImage.imageUrl })
   } catch (err) {
     res.status(400).json({

@@ -3,5 +3,7 @@
 }
 
 #tagsinput .react-tagsinput-tag {
-    background: green !important;
+    background: #EDEDEC !important;
+    border: 0.2em solid #353539;
+    margin: 0.2em;
 }
