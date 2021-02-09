@@ -44,8 +44,9 @@ export const Tagdiv = styled.div`
 `
 
 export const StyledTagsInput = styled(TagsInput)`
-  span[tagsinput='react-tagsinput-tag'] {
-    background: !blue;
+  div[react-tagsinput='react-tagsinput-tag'] {
+    display: flex;
+    flex-direction: column;
   }
 `
 

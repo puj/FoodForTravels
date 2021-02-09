@@ -6,6 +6,7 @@ import { createBlogPost } from 'reducers/user'
 import { Button } from './lib/Button'
 import { StyledForm } from './styles/FormStyles'
 import { CreatePostWrapper, StyledEdiText, Tagdiv, StyledTagsInput } from './styles/Containers'
+import './styles/overwrite.css'
 
 export const CreatePost = () => {
   const dispatch = useDispatch()
@@ -39,7 +40,7 @@ export const CreatePost = () => {
           value={!blogText ? 'Start writing you post here' : blogText}
           onSave={(blogTextInput) => setBlogText(blogTextInput)}
         />
-        <Tagdiv>
+        <Tagdiv id='tagsinput'>
           Add tags to your post by pressing 'Enter', remove by pressing
           'Backspace'
           <StyledTagsInput
@@ -49,25 +50,6 @@ export const CreatePost = () => {
             onChange={(addTags) => setTags(addTags)}
           />
         </Tagdiv>
-        {/* <input
-          type='text'
-          value={title}
-          placeholder='Add title here'
-          onChange={(event) => setTitle(event.target.value)}
-        /> */}
-        {/*<input
-          type='textarea'
-          rows='4'
-          value={blogText}
-          placeholder='Add your blogtext here'
-          onChange={(event) => setBlogText(event.target.value)}
-        /> */}
-        {/* <input
-          type='text'
-          value={tags}
-          placeholder='Enter your tags'
-          onChange={(event) => setTags([event.target.value])}
-        /> */}
         <Button
           buttonText='Add post'
           buttonType='submit'

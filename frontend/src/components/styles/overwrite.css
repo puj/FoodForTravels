@@ -1,0 +1,7 @@
+#tagsinput{
+    background: red;
+}
+
+#tagsinput .react-tagsinput-tag {
+    background: green !important;
+}

@@ -91,7 +91,7 @@ export const ImageWrapper = styled.div`
     width: 12em;
     height: 12em;
     top: -15%;
-    left: -4%;
+    left: -3%;
   }
   @media (min-width: 1024px) {
     width: 13em;
