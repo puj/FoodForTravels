@@ -12,12 +12,13 @@ import { Button } from 'components/lib/Button'
 import { Wrapper } from 'components/styles/Containers'
 
 export const BlogFeed = () => {
-  //const [blogpostArray, setBlogpostArray] = useState([])
-  const [tags, setTags] = useState([])
+  //const [tags, setTags] = useState([])
+  const tags = useSelector((store) => store.blogposts.tags)
   const blogpostArray = useSelector((store) => store.blogposts.posts)
   const dispatch = useDispatch()
 
   console.log('Array in blogfeed:', blogpostArray)
+  console.log('Tags from store:', tags)
 
   useEffect(() => {
     dispatch(getPosts(tags))

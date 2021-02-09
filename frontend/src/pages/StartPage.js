@@ -19,15 +19,7 @@ export const StartPage = () => {
 
   if(!accesstoken) {
     return(
-    <>
-      <Wrapper>
       <Searchbar />
-        <Link to='/blogfeed'>
-        <Button logoutbutton={true}
-        buttonText='Show blogposts'/>
-        </Link>
-      </Wrapper>
-    </>
   )} else {
     return (
      <Wrapper>

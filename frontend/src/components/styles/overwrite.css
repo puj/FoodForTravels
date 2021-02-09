@@ -1,9 +1,14 @@
-#tagsinput{
-    background: red;
+#tagsinput {
+    display: flex;
+    flex-direction: column-reverse;
 }
-
 #tagsinput .react-tagsinput-tag {
     background: #EDEDEC !important;
-    border: 0.2em solid #353539;
+    border-radius: 0.2em;
+    margin: 0.2em;
+    padding: 0.2em;
+}
+
+#tagsinput .react-tagsinput-input {
     margin: 0.2em;
 }

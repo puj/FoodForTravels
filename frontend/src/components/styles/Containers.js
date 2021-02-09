@@ -58,6 +58,9 @@ export const StyledEdiText = styled(Editext)`
     overflow: scroll;
     margin: 1em;
   }
+  div[editext='view-container']{
+    align-items: flex-start;
+  }
   textarea {
     max-height: 10em;
     overflow-y: scroll;

@@ -3,7 +3,7 @@ import { GET_BLOGPOST_URL } from '../urls'
 
 const initialState = {
   posts: localStorage.blogposts || [],
-  //tags: localStorage.tags || []
+  tags: localStorage.tags || []
 }
 
 export const blogposts = createSlice({
@@ -14,11 +14,13 @@ export const blogposts = createSlice({
       const blogposts = action.payload
       state.posts = [...state.posts, ...blogposts]
     },
-    /* setTags: (state, action) => {
+     setTags: (state, action) => {
+        console.log('TAG PAYLOAD:', action.payload)
           const tags = action.payload
           state.tags = [...state.tags, ...tags]
-        } */
-  },
+          console.log('State tag:', state.tags)
+     }
+  }
 })
 
 export const getPosts = (tags) => {

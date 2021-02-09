@@ -1,25 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components/macro'
+import { blogposts } from '../reducers/blogposts'
 
-const StyledSearchbar = styled.input`
-    border-radius: 15px;
-    border: 1px solid #353539;
-    text-align: center;
+import { Wrapper } from '../components/styles/Containers'
+import { Button } from './lib/Button'
 
-    @media (min-width: 768px) {
-        width: 250px;
-        height: 40px;
-        border-radius: 25px;
-    }
+export const StyledSearchbar = styled.input`
+  border-radius: 15px;
+  border: 1px solid #353539;
+  text-align: center;
 
-    @media screen and (min-width: 1024px) {
-        width: 450px;
-        height: 50px;
-        border-radius: 30px;
-        font-size: 20px;
-    }
-    `
-const SearchButton = styled.button`
+  @media (min-width: 768px) {
+    width: 250px;
+    height: 40px;
+    border-radius: 25px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    width: 450px;
+    height: 50px;
+    border-radius: 30px;
+    font-size: 20px;
+  }
+`
+/* const SearchButton = styled.button`
     border-radius: 50%;
     background: #353539;
     color: #fff;
@@ -45,15 +51,34 @@ const SearchButton = styled.button`
         height: 50px;
         font-size: 16px;
     }
-    `
+    ` */
 
 export const Searchbar = () => {
+  const [querytags, setQueryTags] = useState([])
+  const dispatch = useDispatch()
+  
+  const onTagsQuery = () => {
+    dispatch(blogposts.actions.setTags(querytags))
+  }
+
+  //TO FIX: Tags are currently sent in as one letter, even though I send in
+  //a whole word. It has something to do with the event.target.value on change.
+  //fix so one tag is a whole word!
   return (
-    <form>
-      <label>
-        <StyledSearchbar type='text' placeholder='Search for a destination' />
-      </label>
-      <SearchButton type='submit'>GO</SearchButton>
-    </form>
+    <Wrapper>
+      <form>
+        <label>
+          <StyledSearchbar
+            type='text'
+            value={querytags}
+            placeholder='Search for a destination'
+            onChange={(event) => setQueryTags(event.target.value)}
+          />
+        </label>
+        <Link to='/blogfeed'>
+          <Button logoutbutton={true} buttonText='Show blogposts' onClickFunction={onTagsQuery} />
+        </Link>
+      </form>
+    </Wrapper>
   )
 }

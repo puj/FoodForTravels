@@ -5,7 +5,12 @@ import { createBlogPost } from 'reducers/user'
 
 import { Button } from './lib/Button'
 import { StyledForm } from './styles/FormStyles'
-import { CreatePostWrapper, StyledEdiText, Tagdiv, StyledTagsInput } from './styles/Containers'
+import {
+  CreatePostWrapper,
+  StyledEdiText,
+  Tagdiv,
+  StyledTagsInput,
+} from './styles/Containers'
 import './styles/overwrite.css'
 
 export const CreatePost = () => {
@@ -30,31 +35,33 @@ export const CreatePost = () => {
   return (
     <CreatePostWrapper>
       <StyledForm onSubmit={handleSubmit}>
-        <StyledEdiText
-          type='text'
-          value={!title ? 'Enter title here' : title}
-          onSave={(titleInput) => setTitle(titleInput)}
-        />
-        <StyledEdiText
-          type='textarea'
-          value={!blogText ? 'Start writing you post here' : blogText}
-          onSave={(blogTextInput) => setBlogText(blogTextInput)}
-        />
-        <Tagdiv id='tagsinput'>
-          Add tags to your post by pressing 'Enter', remove by pressing
-          'Backspace'
-          <StyledTagsInput
-            inputValue={tag}
-            onChangeInput={(inputTag) => setTag(inputTag)}
-            value={tags}
-            onChange={(addTags) => setTags(addTags)}
+        <div>
+          <StyledEdiText
+            type='text'
+            value={!title ? 'Enter title here' : title}
+            onSave={(titleInput) => setTitle(titleInput)}
           />
-        </Tagdiv>
-        <Button
-          buttonText='Add post'
-          buttonType='submit'
-          onClickFunction={sendPost}
-        />
+          <StyledEdiText
+            type='textarea'
+            value={!blogText ? 'Start writing you post here' : blogText}
+            onSave={(blogTextInput) => setBlogText(blogTextInput)}
+          />
+          <Tagdiv id='tagsinput'>
+            Add tags to your post by pressing 'Enter', remove by pressing
+            'Backspace'
+            <StyledTagsInput
+              inputValue={tag}
+              onChangeInput={(inputTag) => setTag(inputTag)}
+              value={tags}
+              onChange={(addTags) => setTags(addTags)}
+            />
+          </Tagdiv>
+          <Button
+            buttonText='Add post'
+            buttonType='submit'
+            onClickFunction={sendPost}
+          />
+        </div>
       </StyledForm>
     </CreatePostWrapper>
   )
