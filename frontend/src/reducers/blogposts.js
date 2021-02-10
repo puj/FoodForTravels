@@ -3,7 +3,8 @@ import { GET_BLOGPOST_URL } from '../urls'
 
 const initialState = {
   posts: localStorage.blogposts || [],
-  tags: localStorage.tags || []
+  tags: localStorage.tags || [],
+  errorMessage: ''
 }
 
 export const blogposts = createSlice({
@@ -19,11 +20,26 @@ export const blogposts = createSlice({
           const tags = action.payload
           state.tags = [...state.tags, ...tags]
           console.log('State tag:', state.tags)
-     }
+     },
+     setClearTags: (state, action) => {
+       console.log('State before clear:', state.tags)
+       state.tags = []
+       console.log('state after clear:', state.tags)
+     },
+     setClearBlogposts: (state, action) => {
+       console.log('Blogposts before clear:', state.posts)
+       state.posts = []
+       console.log('state.posts after clear:', state.posts)
+     },
+     setErrorMessage: (state, action) => {
+      const { errorMessage } = action.payload
+      state.blogposts.errorMessage = errorMessage
+    },
   }
 })
 
 export const getPosts = (tags) => {
+  console.log('tags in fetch:',tags)
   return (dispatch) => {
     fetch(GET_BLOGPOST_URL(tags), {
       method: 'GET',
@@ -38,8 +54,11 @@ export const getPosts = (tags) => {
         console.log(json)
         dispatch(blogposts.actions.setBlogposts(json))
       })
+      .then(() => {
+        dispatch(blogposts.actions.setClearTags())
+      })
       .catch((err) => {
-        console.log('Error:', err, 'Message:', err.message)
+        dispatch(blogposts.actions.setErrorMessage({ errorMessage: err.toString() }))
       })
   }
 }

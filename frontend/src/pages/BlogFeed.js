@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components/macro'
@@ -6,15 +6,15 @@ import Slider from 'react-slick'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 
-import { getPosts } from '../reducers/blogposts'
+import { getPosts, blogposts } from '../reducers/blogposts'
 import { Card } from 'components/lib/Card'
 import { Button } from 'components/lib/Button'
 import { Wrapper } from 'components/styles/Containers'
 
 export const BlogFeed = () => {
-  //const [tags, setTags] = useState([])
   const tags = useSelector((store) => store.blogposts.tags)
   const blogpostArray = useSelector((store) => store.blogposts.posts)
+  const errorMessage = useSelector((store) => store.blogposts.errorMessage)
   const dispatch = useDispatch()
 
   console.log('Array in blogfeed:', blogpostArray)
@@ -23,6 +23,10 @@ export const BlogFeed = () => {
   useEffect(() => {
     dispatch(getPosts(tags))
   }, [])
+
+  const onBack = () => {
+    dispatch(blogposts.actions.setClearBlogposts())
+  }
 
   const settings = {
     dots: true,
@@ -73,8 +77,10 @@ export const BlogFeed = () => {
   return (
     <Wrapper>
       <Link to='/'>
-        <Button backbutton={true} buttonText='Back' />
+        <Button backbutton={true} buttonText='Back' onClickFunction={onBack} />
       </Link>
+      {blogpostArray.length === 0 && 
+      <p>Sorry, couldn't fin any posts. Try to go back and search again.</p>}
       <StyledSlider {...settings}>
         {blogpostArray.map((blogpost) => {
           return (
