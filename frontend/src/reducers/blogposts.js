@@ -16,20 +16,14 @@ export const blogposts = createSlice({
       state.posts = [...state.posts, ...blogposts]
     },
      setTags: (state, action) => {
-        console.log('TAG PAYLOAD:', action.payload)
           const tags = action.payload
-          state.tags = [...state.tags, ...tags]
-          console.log('State tag:', state.tags)
+          state.tags = [...state.tags, tags] //removed ...tags because it sliced the string up in characters
      },
-     setClearTags: (state, action) => {
-       console.log('State before clear:', state.tags)
+     setClearTags: (state) => {
        state.tags = []
-       console.log('state after clear:', state.tags)
      },
-     setClearBlogposts: (state, action) => {
-       console.log('Blogposts before clear:', state.posts)
+     setClearBlogposts: (state) => {
        state.posts = []
-       console.log('state.posts after clear:', state.posts)
      },
      setErrorMessage: (state, action) => {
       const { errorMessage } = action.payload

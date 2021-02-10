@@ -48,7 +48,7 @@ export const CreatePost = () => {
           />
           <Tagdiv id='tagsinput'>
             Add tags to your post by pressing 'Enter', remove by pressing
-            'Backspace'
+            'Backspace'. Example: "London", "Tacos" etc.
             <StyledTagsInput
               inputValue={tag}
               onChangeInput={(inputTag) => setTag(inputTag)}

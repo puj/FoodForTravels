@@ -25,33 +25,6 @@ export const StyledSearchbar = styled.input`
     font-size: 20px;
   }
 `
-/* const SearchButton = styled.button`
-    border-radius: 50%;
-    background: #353539;
-    color: #fff;
-    height: 30px;
-    width: 30px;
-    margin-left: 10px;
-    border: none;
-    padding: 2px;
-    font-size: 12px;
-    box-shadow: 3px 4px 8px -3px rgba(0,0,0,0.7);
-    &:hover {
-        background: #5d5d5e;
-        transform: scale(1.1);
-    }
-
-    @media (min-width: 768px) {
-        width: 40px;
-        height: 40px;
-    }
-    
-    @media screen and (min-width: 1024px) {
-        width: 50px;
-        height: 50px;
-        font-size: 16px;
-    }
-    ` */
 
 export const Searchbar = () => {
   const [querytags, setQueryTags] = useState([])
@@ -61,9 +34,6 @@ export const Searchbar = () => {
     dispatch(blogposts.actions.setTags(querytags))
   }
 
-  //TO FIX: Tags are currently sent in as one letter, even though I send in
-  //a whole word. It has something to do with the event.target.value on change.
-  //fix so one tag is a whole word!
   return (
     <Wrapper>
       <form>

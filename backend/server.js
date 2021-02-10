@@ -230,7 +230,6 @@ app.patch('/users/:id', parser.single('image'), async(req, res) => {
 app.patch('/users/:id/description', authenticateUser)
 app.patch('/users/:id/description', async(req, res) => {
   const { id } = req.params
-  console.log('REQBODY:',req.body)
   try {
     const userProfile = await User.findOneAndUpdate(
       { _id: id },

@@ -14,11 +14,8 @@ import { Wrapper } from 'components/styles/Containers'
 export const BlogFeed = () => {
   const tags = useSelector((store) => store.blogposts.tags)
   const blogpostArray = useSelector((store) => store.blogposts.posts)
-  const errorMessage = useSelector((store) => store.blogposts.errorMessage)
+  const errorMessage = useSelector((store) => store.blogposts.errorMessage) //display errorMessage
   const dispatch = useDispatch()
-
-  console.log('Array in blogfeed:', blogpostArray)
-  console.log('Tags from store:', tags)
 
   useEffect(() => {
     dispatch(getPosts(tags))
