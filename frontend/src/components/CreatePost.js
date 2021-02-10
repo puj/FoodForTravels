@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import { createBlogPost } from 'reducers/user'
 
@@ -34,7 +35,10 @@ export const CreatePost = () => {
 
   return (
     <CreatePostWrapper>
-      <StyledForm onSubmit={handleSubmit}>
+      <Link to='/profile'>
+        <Button backbutton={true} buttonText='Back' />
+      </Link>
+        <StyledForm onSubmit={handleSubmit}>
         <div>
           <StyledEdiText
             type='text'
@@ -63,6 +67,9 @@ export const CreatePost = () => {
           />
         </div>
       </StyledForm>
+        <Button
+        buttonText='Create another post'
+        />
     </CreatePostWrapper>
   )
 }
