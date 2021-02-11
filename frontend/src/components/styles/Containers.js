@@ -61,6 +61,9 @@ export const StyledEdiText = styled(Editext)`
   div[editext='view-container']{
     align-items: flex-start;
   }
+  div[editext='view-container']::webkit-scrollbar{
+    display: none;
+  }
   textarea {
     max-height: 10em;
     overflow-y: scroll;

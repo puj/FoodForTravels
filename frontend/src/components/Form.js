@@ -1,6 +1,6 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import { login, signUp } from '../reducers/user'
 
@@ -24,6 +24,7 @@ export const Form = ({ alreadyUser, newUser }) => {
   const [password, setPassword] = useState('')
   const [fileName, setFileName] = useState('')
   const fileInput = useRef()
+  const history = useHistory()
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -36,6 +37,12 @@ export const Form = ({ alreadyUser, newUser }) => {
   const handleLogin = () => {
     dispatch(login(username, password))
   }
+
+  useEffect(() => {
+    if (accesstoken) {
+      history.push('/');
+    }
+  }, [accesstoken, history])
 
   return (
     <StyledForm onSubmit={handleSubmit}>
@@ -59,13 +66,11 @@ export const Form = ({ alreadyUser, newUser }) => {
               onChange={(event) => setPassword(event.target.value)}
             />
           </Label>
-          <Link to={accesstoken ? '/' : '/login'}>
             <Button
               buttonType='submit'
               buttonText='Log In'
               onClickFunction={handleLogin}
             />
-          </Link>
         </>
       )}
       {newUser && (
@@ -117,13 +122,11 @@ export const Form = ({ alreadyUser, newUser }) => {
           <Filename>{fileName}</Filename>
 
           <div>
-            <Link to={accesstoken ? `/` : `/signup`}>
               <Button
                 buttonType='submit'
                 buttonText='Sign Up'
                 onClickFunction={handleSignUp}
               />
-            </Link>
           </div>
         </>
       )}

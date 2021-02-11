@@ -14,7 +14,6 @@ import { Wrapper } from 'components/styles/Containers'
 export const BlogFeed = () => {
   const tags = useSelector((store) => store.blogposts.tags)
   const blogpostArray = useSelector((store) => store.blogposts.posts)
-  const errorMessage = useSelector((store) => store.blogposts.errorMessage) //display errorMessage
   const dispatch = useDispatch()
 
   useEffect(() => {

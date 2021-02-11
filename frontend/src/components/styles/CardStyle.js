@@ -56,12 +56,14 @@ export const InnerCard = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow: scroll;
   `}
   ${({ previewCard }) =>
     previewCard &&
     `
     background: #fff;
     max-height: 9em;
+    overflow: scroll;
     @media(min-width: 768px){
       max-height: 70%;
     }

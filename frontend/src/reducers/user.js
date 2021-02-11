@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { useHistory } from 'react-router-dom'
 
 import {
   SIGN_UP_URL,
@@ -151,7 +152,7 @@ export const addUserDescription = (userId, accesstoken, userDescription) => {
     })
       .then((res) => {
         if (!res.ok) {
-          throw new Error('Could not create post')
+          throw new Error('Could not add user description')
         }
         return res.json()
       })
@@ -162,7 +163,7 @@ export const addUserDescription = (userId, accesstoken, userDescription) => {
 }
 
 export const createBlogPost = (userid, accesstoken, title, blogText, tags) => {
-  return () => {
+  return (dispatch) => {
     fetch(CREATE_POST_URL(userid), {
       method: 'POST',
       body: JSON.stringify({ title, text: blogText, tags }),
@@ -173,9 +174,12 @@ export const createBlogPost = (userid, accesstoken, title, blogText, tags) => {
     })
       .then((res) => {
         if (!res.ok) {
-          throw new Error('Could not create post')
+          throw new Error('Could not create post. Check that your title has at least two characters and your blogtext at least 20 characters.')
         }
         return res.json()
+      })
+      .catch((err) => {
+        dispatch(user.actions.setErrorMessage({ errorMessage: err.toString() }))
       })
       /* .then(({ id }) => {
               const formData = new FormData()

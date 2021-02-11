@@ -18,6 +18,7 @@ export const CreatePost = () => {
   const dispatch = useDispatch()
   const userid = useSelector((store) => store.user.login.userId)
   const accesstoken = useSelector((store) => store.user.login.accessToken)
+  const errorMessage = useSelector((store) => store.user.login.errorMessage)
   const [title, setTitle] = useState('')
   const [blogText, setBlogText] = useState('')
   const [tags, setTags] = useState([])
@@ -67,9 +68,10 @@ export const CreatePost = () => {
           />
         </div>
       </StyledForm>
-        <Button
+      {errorMessage && <p>{`${errorMessage}`}</p>}
+        {/* <Button
         buttonText='Create another post'
-        />
+        /> */}
     </CreatePostWrapper>
   )
 }
