@@ -18,6 +18,7 @@ export const BlogFeed = () => {
 
   useEffect(() => {
     dispatch(getPosts(tags))
+    // eslint-disable-next-line
   }, [])
 
   const onBack = () => {

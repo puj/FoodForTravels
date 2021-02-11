@@ -35,6 +35,11 @@ export const CreatePostWrapper = styled.div`
   padding: 2em;
   position: absolute;
   margin: 1em 0;
+  &::-webkit-scrollbar {
+    display: none;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 `
 export const Tagdiv = styled.div`
   margin: 1em;

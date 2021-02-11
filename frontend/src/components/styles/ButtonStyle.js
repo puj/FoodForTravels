@@ -17,13 +17,26 @@ export const StyledButton = styled.button`
     transform: scale(1.1);
   }
   `}
+  ${({ linklogout }) => linklogout &&`
+    background: transparent;
+    color: #fff;
+    font-size: 16px;
+    margin: 3px;
+    &:hover {
+      transform: scale(1.1);
+    }
+  `}
   ${({ backbutton }) =>
     backbutton &&
     `
-    background: #353539;
+    background: transparent;
     font-size: 1.6em;
-    color: #d7ecf3;
+    color: #353539;
     margin: 0.6em;
     align-self: baseline;
+
+    &:hover {
+      transform: scale(1.1);
+    }
   `}
 `

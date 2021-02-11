@@ -23,7 +23,6 @@ export const Profile = () => {
 
   const handleOnClick = (event) => {
     event.preventDefault()
-    console.log('desc:', userDescription)
     dispatch(addUserDescription(userId, accesstoken, userDescription))
   }
 

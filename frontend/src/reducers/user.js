@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { useHistory } from 'react-router-dom'
 
 import {
   SIGN_UP_URL,

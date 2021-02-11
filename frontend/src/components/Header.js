@@ -27,7 +27,7 @@ export const Header = () => {
             <Button
               buttonText='Log out'
               onClickFunction={handleLogout}
-              logoutbutton={true}
+              linklogout={true}
             />
           </Link>
         </Links>

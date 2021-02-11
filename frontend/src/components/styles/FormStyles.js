@@ -9,6 +9,11 @@ export const StyledForm = styled.form`
   min-height: 50%;
   background: #fff;
   padding: 10px;
+  box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.75);
+
+  ${({ postform }) => postform &&`
+  box-shadow: none;
+  `}
 `
 export const Label = styled.label`
   margin: 10px;

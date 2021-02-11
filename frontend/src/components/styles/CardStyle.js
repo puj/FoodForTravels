@@ -2,7 +2,7 @@ import styled from 'styled-components/macro'
 
 export const CardWrapper = styled.div`
   width: 100%;
-  height: 25em;
+  min-height: 100%;
   background: #353539;
   display: flex;
   flex-direction: column;
@@ -48,6 +48,11 @@ export const CardText = styled.p`
 export const InnerCard = styled.div`
   width: 80%;
   height: 70%;
+  &::-webkit-scrollbar {
+    display: none;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
   ${({ whiteBackground }) =>
     whiteBackground &&
     `

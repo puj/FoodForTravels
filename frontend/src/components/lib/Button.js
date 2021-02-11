@@ -1,9 +1,9 @@
 import React from 'react'
 import {StyledButton} from '../styles/ButtonStyle'
 
-export const Button = ({ logoutbutton, backbutton, buttonText, buttonType, onClickFunction }) => {
+export const Button = ({ linklogout, logoutbutton, backbutton, buttonText, buttonType, onClickFunction }) => {
     return (
-      <StyledButton backbutton={backbutton} logoutbutton={logoutbutton} type={buttonType} onClick={onClickFunction}>
+      <StyledButton linklogout={linklogout} backbutton={backbutton} logoutbutton={logoutbutton} type={buttonType} onClick={onClickFunction}>
         {buttonText}
       </StyledButton>
     )

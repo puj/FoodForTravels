@@ -39,7 +39,7 @@ export const CreatePost = () => {
       <Link to='/profile'>
         <Button backbutton={true} buttonText='Back' />
       </Link>
-        <StyledForm onSubmit={handleSubmit}>
+        <StyledForm postform={true} onSubmit={handleSubmit}>
         <div>
           <StyledEdiText
             type='text'
@@ -69,9 +69,6 @@ export const CreatePost = () => {
         </div>
       </StyledForm>
       {errorMessage && <p>{`${errorMessage}`}</p>}
-        {/* <Button
-        buttonText='Create another post'
-        /> */}
     </CreatePostWrapper>
   )
 }
