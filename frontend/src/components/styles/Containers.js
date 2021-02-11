@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
   background: #d7ecf3;
   min-width: 100vw;
 
-  @media(min-width: 768px) {
+  @media (min-width: 768px) {
     height: 70vh;
   }
 `
@@ -57,11 +57,17 @@ export const StyledEdiText = styled(Editext)`
     max-height: 10em;
     overflow: scroll;
     margin: 1em;
+
+    &::-webkit-scrollbar {
+      display: none;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
   }
-  div[editext='view-container']{
+  div[editext='view-container'] {
     align-items: flex-start;
   }
-  div[editext='view-container']::webkit-scrollbar{
+  div[editext='view-container']::webkit-scrollbar {
     display: none;
   }
   textarea {
